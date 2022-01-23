@@ -1,17 +1,28 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
-const Home: NextPage = () => (
-  <>
-    <Head>
-      <title>Home</title>
-    </Head>
-    <div>
-      <Image src="/vercel.svg" alt="logo" width={200} height={200} />
-      <p className="text-red-700 text-2xl">Hello Next.js</p>
-    </div>
-  </>
-)
+const Home: NextPage = () => {
+  const { data: session } = useSession()
+
+  if (session) {
+    return (
+      <>
+        Signed in as {session.user?.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    )
+  }
+  return (
+    <>
+      Not signed in <br />
+      <button
+        className="bg-red-600 text-white p-2 rounded-md"
+        onClick={() => signIn('google')}
+      >
+        Sign in
+      </button>
+    </>
+  )
+}
 
 export default Home
