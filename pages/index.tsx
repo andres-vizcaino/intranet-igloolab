@@ -1,26 +1,22 @@
 import type { NextPage } from 'next'
-import { useSession, signIn, signOut } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import Header from 'components/Header'
 
 const Home: NextPage = () => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
 
-  if (session) {
-    return (
-      <>
-        Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
+  if (status === 'loading') {
+    return <p>Loading...</p>
   }
+
   return (
     <>
-      Not signed in <br />
-      <button
-        className="bg-red-600 text-white p-2 rounded-md"
-        onClick={() => signIn('google')}
-      >
-        Sign in
-      </button>
+      <Header />
+      {status === 'unauthenticated' || session == null ? (
+        <p>No estás conectado.</p>
+      ) : (
+        <p>Ha iniciado la sesión.</p>
+      )}
     </>
   )
 }

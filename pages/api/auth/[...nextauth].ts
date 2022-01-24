@@ -1,7 +1,11 @@
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import prisma from 'lib/prisma'
 
 export default NextAuth({
+  adapter: PrismaAdapter(prisma),
+
   // Configure one or more authentication providers
   providers: [
     GoogleProvider({
@@ -11,11 +15,4 @@ export default NextAuth({
     // ...add more providers here
   ],
   secret: process.env.SECRET,
-  debug: process.env.NODE_ENV !== 'production',
-  session: {
-    strategy: 'jwt',
-  },
-  jwt: {
-    secret: process.env.SECRET,
-  },
 })
