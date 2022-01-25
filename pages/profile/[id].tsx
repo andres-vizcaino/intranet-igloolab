@@ -16,14 +16,16 @@ const ProfileId: NextPage = () => {
   const { isLoading, user, isError, mutate } = useUser(id as string)
 
   useEffect(() => {
-    if (session?.user?.id === id) {
-      if (user?.profile?.bio) setBio(user?.profile?.bio)
+    if (id === session?.user?.id) {
       setownProfile(true)
+    } else {
+      setownProfile(false)
     }
-  }, [session, id, user])
+  }, [session, id])
 
   const handleClick = () => {
     seteditProfile(true)
+    setBio(user?.profile?.bio || '')
   }
 
   const handleEditBio = async () => {

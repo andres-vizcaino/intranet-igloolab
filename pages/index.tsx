@@ -24,13 +24,14 @@ const Home: NextPage = () => {
               <div className="flex gap-10 flex-wrap mt-10">
                 {data?.map((user) => (
                   <Link href={`/profile/${user.id}`} passHref key={user.id}>
-                    <div className="flex flex-col justify-center items-stretch">
+                    <div className="flex flex-col justify-center items-center">
                       <Image
                         src={user?.image}
                         alt={`Foto de perfil ${user.name}`}
-                        width={100}
-                        height={100}
+                        width={120}
+                        height={120}
                         className="rounded-t-lg"
+                        layout="fixed"
                       />
                       <p className="mt-5">{user.name}</p>
                     </div>
