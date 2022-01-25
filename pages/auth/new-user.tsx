@@ -1,16 +1,19 @@
+import useUser from 'hooks/useUser'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { FormEvent, useState } from 'react'
 import { createProfile } from 'services/profile.services'
 
 const NewUser: NextPage = () => {
   const [bio, setBio] = useState('')
   const { data: session } = useSession()
+  const router = useRouter()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const res = await createProfile(session?.user.id, bio)
-    console.log(res)
+    await createProfile(session?.user.id, bio)
+    router.push('/')
   }
 
   return (
