@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { signOut } from 'next-auth/react'
 import { Session } from 'next-auth'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const chevronIcon = (
   <svg
@@ -18,8 +19,9 @@ const chevronIcon = (
 )
 
 const NavUserProfile = ({ user }: { user: Session['user'] }) => {
-  const { name, image } = user ?? {}
-
+  const { name, image, id } = user ?? {}
+  const router = useRouter()
+  const handleViewProfile = () => router.push(`/profile/${id}`)
   const handleSignOut = () => signOut()
 
   return (
@@ -51,10 +53,22 @@ const NavUserProfile = ({ user }: { user: Session['user'] }) => {
           <Menu.Item>
             {({ active }) => (
               <button
+                onClick={handleViewProfile}
+                className={`${
+                  active ? 'bg-red-300' : ''
+                } rounded-md w-full px-4 py-2 text-sm text-gray-900 font-semibold text-center`}
+              >
+                Ver perfil
+              </button>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <button
                 onClick={handleSignOut}
                 className={`${
-                  active ? 'bg-red-500' : ''
-                } group flex gap-1 rounded-md items-center w-full px-4 py-2 text-sm text-gray-900 font-semibold`}
+                  active ? 'bg-red-300' : ''
+                } group flex gap-1 rounded-md items-center w-full px-4 py-2 text-xs text-gray-900 font-semibold`}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

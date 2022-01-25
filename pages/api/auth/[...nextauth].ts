@@ -15,4 +15,13 @@ export default NextAuth({
     // ...add more providers here
   ],
   secret: process.env.SECRET,
+  callbacks: {
+    session({ session, user }) {
+      session.user.id = user.id
+      return session // The return type will match the one returned in `useSession()`
+    },
+  },
+  pages: {
+    newUser: '/auth/new-user',
+  },
 })
