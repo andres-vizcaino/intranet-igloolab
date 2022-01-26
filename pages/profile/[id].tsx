@@ -50,23 +50,39 @@ const ProfileId: NextPage = () => {
 
       <div className="mt-4">
         <p className="text-center text-red-500 text-sm">Biografia</p>
-        {editProfile ? (
-          <textarea
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            value={bio}
-            onChange={({ target }) => setBio(target.value)}
-            placeholder="Escribe aquí tu biografía"
-          />
+        {user?.profile ? (
+          <>
+            {editProfile ? (
+              <textarea
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                value={bio}
+                onChange={({ target }) => setBio(target.value)}
+                placeholder="Escribe aquí tu biografía"
+              />
+            ) : (
+              <p className="text-center text-lg">{user?.profile?.bio}</p>
+            )}
+            {ownProfile && (
+              <button
+                onClick={editProfile ? handleEditBio : handleClick}
+                className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                {editProfile ? 'Guardar' : 'Editar'}
+              </button>
+            )}
+          </>
         ) : (
-          <p className="text-center text-lg">{user?.profile?.bio}</p>
-        )}
-        {ownProfile && (
-          <button
-            onClick={editProfile ? handleEditBio : handleClick}
-            className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            {editProfile ? 'Guardar' : 'Editar'}
-          </button>
+          <>
+            <p className="text-center text-lg">Aún no tengo biografía 😞</p>
+            {ownProfile && (
+              <button
+                onClick={() => router.push('/auth/new-user')}
+                className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Editar
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
