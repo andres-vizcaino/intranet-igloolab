@@ -21,24 +21,22 @@ const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
       style={{ minWidth: 300 }}
     >
       <div className="flex  justify-between">
-        <div className="flex cursor-pointer">
-          <Link href={`/profile/${userId}`} passHref>
-            <>
-              <Image
-                src={author.image || ''}
-                width={42}
-                height={42}
-                alt={`Foto de perfil de ${author.name}`}
-                className="rounded-full"
-              />
+        <Link href={`/profile/${userId}`}>
+          <a className="flex cursor-pointer">
+            <Image
+              src={author.image || ''}
+              width={42}
+              height={42}
+              alt={`Foto de perfil de ${author.name}`}
+              className="rounded-full"
+            />
 
-              <div className="ml-4">
-                <p className="text-base">{author.name}</p>
-                <p className="text-xs">{getTimeAgo(createdAt)}</p>
-              </div>
-            </>
-          </Link>
-        </div>
+            <div className="ml-4">
+              <p className="text-base">{author.name}</p>
+              <p className="text-xs">{getTimeAgo(createdAt)}</p>
+            </div>
+          </a>
+        </Link>
         {session?.user?.id === userId && (
           <Image
             onClick={handleClickDelete}
