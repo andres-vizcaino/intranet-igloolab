@@ -77,17 +77,17 @@ const CreateTweet = () => {
             >
               <form
                 onSubmit={handleOnSubmit}
-                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl"
+                className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-slate-500 shadow-xl rounded-2xl"
               >
                 <Dialog.Title
                   as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
+                  className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   Cuentanos todo 👀
                 </Dialog.Title>
                 <div className="mt-2">
                   <textarea
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
                     placeholder="Escribe aqui tu estado"
                     maxLength={280}
                     autoFocus
@@ -100,7 +100,9 @@ const CreateTweet = () => {
                   <div className="mt-2 text-right">
                     <span
                       className={`${
-                        count >= 200 ? 'text-red-500' : 'text-gray-600'
+                        count >= 200
+                          ? 'text-red-500'
+                          : 'text-gray-600 dark:text-white'
                       } text-sm `}
                     >
                       {count}/280

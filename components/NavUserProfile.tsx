@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 const chevronIcon = (
   <svg
-    className="text-gray-900"
+    className="text-gray-900 dark:text-white"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
     width="24"

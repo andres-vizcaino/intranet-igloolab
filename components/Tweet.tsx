@@ -3,21 +3,21 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { deleteTweet } from 'services/tweet.services'
-import useSWR from 'swr'
+import { useSWRConfig } from 'swr'
 import { getTimeAgo } from 'utils/getTimeAgo'
 
 const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
   const { data: session } = useSession()
-  const { mutate } = useSWR('/api/tweet')
+  const { mutate } = useSWRConfig()
 
   const handleClickDelete = async () => {
     await deleteTweet(id)
-    mutate()
+    mutate('/api/tweet')
   }
 
   return (
     <div
-      className="w-full max-w-xl border border-gray-300 rounded-2xl py-3 px-5"
+      className="w-full max-w-xl border dark:bg-gray-700 border-gray-300 rounded-2xl py-3 px-5"
       style={{ minWidth: 300 }}
     >
       <div className="flex  justify-between">
@@ -40,6 +40,7 @@ const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
         {session?.user?.id === userId && (
           <Image
             onClick={handleClickDelete}
+            className="cursor-pointer"
             src="/icons/trash.svg"
             width={25}
             height={25}

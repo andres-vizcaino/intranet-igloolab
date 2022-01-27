@@ -1816,6 +1816,11 @@ next-auth@*, next-auth@^4.1.2:
     preact-render-to-string "^5.1.19"
     uuid "^8.3.2"
 
+next-themes@^0.0.15:
+  version "0.0.15"
+  resolved "https://verdaccio-repository-722dj.ondigitalocean.app/next-themes/-/next-themes-0.0.15.tgz#ab0cee69cd763b77d41211f631e108beab39bf7d"
+  integrity sha512-LTmtqYi03c4gMTJmWwVK9XkHL7h0/+XrtR970Ujvtu3s0kZNeJN24aJsi4rkZOI8i19+qq6f8j+8Duwy5jqcrQ==
+
 next@12.0.8:
   version "12.0.8"
   resolved "https://verdaccio-repository-722dj.ondigitalocean.app/next/-/next-12.0.8.tgz#29138f7cdd045e4bbba466af45bf430e769634b4"

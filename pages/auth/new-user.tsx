@@ -21,11 +21,11 @@ const NewUser: NextPage = () => {
         Hablanos un poco de tí!
       </h3>
       <form className="mt-4" onSubmit={handleSubmit}>
-        <label className="block text-gray-700 text-sm font-bold mb-2">
+        <label className="block text-gray-700 text-sm font-bold mb-2 dark:text-white">
           ¿Cuál es tu biografía?
         </label>
         <textarea
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
           value={bio}
           onChange={({ target }) => setBio(target.value)}
           placeholder="Escribe aquí tu biografía"

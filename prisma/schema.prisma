@@ -60,10 +60,11 @@ model VerificationToken {
 }
 
 model Profile {
-  id     Int    @id @default(autoincrement())
-  bio    String
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
+  id       Int       @id @default(autoincrement())
+  bio      String
+  birthday DateTime?
+  user     User      @relation(fields: [userId], references: [id])
+  userId   String    @unique
 }
 
 model Tweet {

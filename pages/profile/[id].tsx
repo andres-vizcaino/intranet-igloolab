@@ -56,7 +56,7 @@ const ProfileId: NextPage = () => {
             <>
               {editProfile ? (
                 <textarea
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
                   value={bio}
                   onChange={({ target }) => setBio(target.value)}
                   placeholder="Escribe aquí tu biografía"
