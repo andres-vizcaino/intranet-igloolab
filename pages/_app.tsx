@@ -4,6 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
 import { SWRConfig } from 'swr'
 import Header from 'components/Header'
+import Footer from 'components/Footer'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const fetcher = (url: string) => fetch(url).then((r) => r.json())
@@ -14,9 +15,12 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <Head>
           <title>Intranet - igloolab</title>
         </Head>
-        <Header />
-        <div className="container mx-auto px-4 mt-12">
-          <Component {...pageProps} />
+        <div className="flex flex-col h-screen justify-between">
+          <Header />
+          <main className="container mx-auto px-4 mb-auto">
+            <Component {...pageProps} />
+          </main>
+          <Footer />
         </div>
       </SWRConfig>
     </SessionProvider>

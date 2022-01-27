@@ -21,6 +21,14 @@ export default async function handler(
       profile: true,
       image: true,
       emailVerified: true,
+      tweets: {
+        include: {
+          author: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
     },
   })
 

@@ -1,3 +1,4 @@
+import Tweet from 'components/Tweet'
 import useUser from 'hooks/useUser'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
@@ -37,55 +38,67 @@ const ProfileId: NextPage = () => {
   if (isError) return <p>Error</p>
   if (isLoading) return <p>Loading</p>
   return (
-    <div className="flex items-center justify-center flex-col gap-5">
-      <Image
-        src={user?.image || ''}
-        alt={`Foto perfil ${user?.name}`}
-        width={100}
-        height={100}
-        className="rounded-full"
-      />
+    <>
+      <div className="flex items-center justify-center flex-col gap-5">
+        <Image
+          src={user?.image || ''}
+          alt={`Foto perfil ${user?.name}`}
+          width={100}
+          height={100}
+          className="rounded-full"
+        />
 
-      <p className="text-center text-2xl">{user?.name}</p>
+        <p className="text-center text-2xl">{user?.name}</p>
 
-      <div className="mt-4">
-        <p className="text-center text-red-500 text-sm">Biografia</p>
-        {user?.profile ? (
-          <>
-            {editProfile ? (
-              <textarea
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                value={bio}
-                onChange={({ target }) => setBio(target.value)}
-                placeholder="Escribe aquí tu biografía"
-              />
-            ) : (
-              <p className="text-center text-lg">{user?.profile?.bio}</p>
-            )}
-            {ownProfile && (
-              <button
-                onClick={editProfile ? handleEditBio : handleClick}
-                className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                {editProfile ? 'Guardar' : 'Editar'}
-              </button>
-            )}
-          </>
-        ) : (
-          <>
-            <p className="text-center text-lg">Aún no tengo biografía 😞</p>
-            {ownProfile && (
-              <button
-                onClick={() => router.push('/auth/new-user')}
-                className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Editar
-              </button>
-            )}
-          </>
-        )}
+        <div className="mt-4">
+          <p className="text-center text-red-500 text-sm">Biografia</p>
+          {user?.profile ? (
+            <>
+              {editProfile ? (
+                <textarea
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  value={bio}
+                  onChange={({ target }) => setBio(target.value)}
+                  placeholder="Escribe aquí tu biografía"
+                />
+              ) : (
+                <p className="text-center text-lg">{user?.profile?.bio}</p>
+              )}
+              {ownProfile && (
+                <button
+                  onClick={editProfile ? handleEditBio : handleClick}
+                  className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  {editProfile ? 'Guardar' : 'Editar'}
+                </button>
+              )}
+            </>
+          ) : (
+            <>
+              <p className="text-center text-lg">Aún no tengo biografía 😞</p>
+              {ownProfile && (
+                <button
+                  onClick={() => router.push('/auth/new-user')}
+                  className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                >
+                  Editar
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+
+      <div className="mt-10 flex flex-col items-center">
+        <p className="text-center text-red-500 text-sm">Mis estados</p>
+
+        <div className="mt-4 flex flex-col gap-10">
+          {user?.tweets.map((tweet) => (
+            <Tweet key={tweet.id} {...tweet} />
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 

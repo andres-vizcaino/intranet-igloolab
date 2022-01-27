@@ -1,13 +1,13 @@
-import { IUser } from 'models/User.model'
+import CreateTweet from 'components/CreateTweet'
+import Tweet from 'components/Tweet'
+import { ITweet } from 'models/Tweet.model'
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
-import Link from 'next/link'
 import useSWR from 'swr'
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
-  const { data, error } = useSWR<IUser[]>('/api/users')
+  const { data, error } = useSWR<ITweet[]>('/api/tweet')
 
   return (
     <div>
@@ -15,30 +15,16 @@ const Home: NextPage = () => {
         <p className="text-center text-4xl">No estás conectado. 🥲</p>
       ) : (
         <>
-          <p className="text-center text-4xl">Ha iniciado la sesión. 😎</p>
-          <div className="mt-4">
-            <p className="text-center text-2xl">Directorio</p>
-            {!error && !data ? (
-              <p className="text-center text-lg">Cargando...</p>
-            ) : (
-              <div className="flex gap-10 flex-wrap mt-10">
-                {data?.map((user) => (
-                  <Link href={`/profile/${user.id}`} passHref key={user.id}>
-                    <div className="flex flex-col justify-center items-center">
-                      <Image
-                        src={user?.image}
-                        alt={`Foto de perfil ${user.name}`}
-                        width={120}
-                        height={120}
-                        className="rounded-t-lg"
-                        layout="fixed"
-                      />
-                      <p className="mt-5">{user.name}</p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            )}
+          <CreateTweet />
+          <div className="mt-10 flex flex-col gap-7 justify-center items-center">
+            <div className="text-red-500 font-medium">
+              Chismosea los ultimos estados
+            </div>
+            {error && <div>failed to load</div>}
+            {!data && <div>Cargando todos los tweets...</div>}
+            {data?.map((tweet) => (
+              <Tweet key={tweet.id} {...tweet} />
+            ))}
           </div>
         </>
       )}
