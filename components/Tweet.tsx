@@ -50,7 +50,7 @@ const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
         )}
       </div>
 
-      <p className="mt-5 break-all">{body}</p>
+      <p className="mt-5 break-normal">{body}</p>
     </div>
   )
 }
