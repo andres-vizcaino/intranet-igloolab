@@ -25,7 +25,7 @@ export default async function handler(
         id: Number(id),
       },
       data: {
-        like: Number(like),
+        like: like,
       },
     })
     res.status(200).json(response)

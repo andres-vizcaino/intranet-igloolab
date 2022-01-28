@@ -62,7 +62,7 @@ const Tweet = ({ author, userId, body, createdAt, id, like }: ITweet) => {
           onClick={handleLike}
           className="mt-4 max-w-lg bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          {like} 👍
+          {likes} 👍
         </button>
       </div>
     </div>
