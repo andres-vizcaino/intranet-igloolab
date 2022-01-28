@@ -1,4 +1,5 @@
 import { Profile } from '@prisma/client'
+import { IPost } from './Post.model'
 import { ITweet } from './Tweet.model'
 
 export interface IUser {
@@ -9,4 +10,5 @@ export interface IUser {
   name: string | null
   image: string
   tweets: ITweet[]
+  posts: IPost[]
 }

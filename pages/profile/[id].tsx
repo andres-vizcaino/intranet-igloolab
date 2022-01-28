@@ -3,9 +3,11 @@ import useUser from 'hooks/useUser'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { updateProfile } from 'services/profile.services'
+import { getTimeAgo } from 'utils/getTimeAgo'
 
 const ProfileId: NextPage = () => {
   const router = useRouter()
@@ -89,13 +91,34 @@ const ProfileId: NextPage = () => {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-col items-center">
-        <p className="text-center text-red-500 text-sm">Mis estados</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="mt-10 flex flex-col items-center">
+          <p className="text-center text-red-500 text-sm">Mis estados</p>
 
-        <div className="mt-4 flex flex-col gap-10">
-          {user?.tweets.map((tweet) => (
-            <Tweet key={tweet.id} {...tweet} />
-          ))}
+          <div className="mt-4 flex flex-col gap-10">
+            {user?.tweets.map((tweet) => (
+              <Tweet key={tweet.id} {...tweet} />
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10 flex flex-col items-center">
+          <p className="text-center text-red-500 text-sm">Mis Articulos</p>
+
+          <div className="mt-4 flex flex-col gap-10">
+            {user?.posts.map((post) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
+                <a>
+                  <p className="text-center text-2xl font-medium">
+                    {post.title}
+                  </p>
+                  <p className="text-center text-sm">
+                    {getTimeAgo(post.createdAt)}
+                  </p>
+                </a>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </>

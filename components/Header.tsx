@@ -1,9 +1,18 @@
 import Logo from 'components/Logo'
 import NavUserOutlet from './NavUserOutlet'
 import { useTheme } from 'next-themes'
+import { useEffect } from 'react'
 
 const Header = () => {
   const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      setTheme('dark')
+    } else {
+      setTheme('light')
+    }
+  }, [theme, setTheme])
 
   return (
     <header className="flex items-center justify-between w-full max-w-4xl px-2 mx-auto my-4">

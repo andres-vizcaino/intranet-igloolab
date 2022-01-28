@@ -27,12 +27,14 @@ const Home: NextPage = () => {
               </a>
             </Link>
 
-            <a
-              type="button"
-              className="mt-4 max-w-lg bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Ir al Blog 🍕
-            </a>
+            <Link href={'/blog'}>
+              <a
+                type="button"
+                className="mt-4 max-w-lg bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Ir al Blog 🍕
+              </a>
+            </Link>
           </div>
           <div className="mt-10 flex flex-col gap-7 justify-center items-center">
             <div className="text-red-500 font-medium">

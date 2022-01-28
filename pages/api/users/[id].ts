@@ -29,6 +29,11 @@ export default async function handler(
           createdAt: 'desc',
         },
       },
+      posts: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
     },
   })
 

@@ -49,6 +49,8 @@ model User {
   sessions      Session[]
   profile       Profile?
   tweets        Tweet[]
+  posts         Post[]
+
 }
 
 model VerificationToken {
@@ -76,4 +78,17 @@ model Tweet {
   userId    String
 
   @@map("tweets")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  slug      String   @unique
+  content   String?
+  createdAt DateTime @default(now()) @map("created_at")
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String
+
+  @@map("posts")
 }

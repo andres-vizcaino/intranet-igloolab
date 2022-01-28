@@ -15,14 +15,14 @@ const getUnitAndValueDate = (secondsElapsed: number) => {
   }
 }
 
-const dateToTimestamp = (date: Date) => new Date(date).getTime()
+const dateToTimestamp = (date: number) => new Date(date).getTime()
 
 type TGetTimeAgo = {
   value: number
   unit: string
 }
 
-export const getTimeAgo = (date: Date) => {
+export const getTimeAgo = (date: number) => {
   const timestamp = dateToTimestamp(date)
   const rtf = new Intl.RelativeTimeFormat()
 
