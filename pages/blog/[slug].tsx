@@ -5,25 +5,23 @@ import MarkdownIt from 'markdown-it'
 import prisma from 'lib/prisma'
 import Image from 'next/image'
 import Link from 'next/link'
-
-type Props = {
-  postServer: {
-    title: string
-    author: {
-      image: string | null
-      name: string | null
-    }
-  } | null
-}
+import { useSession } from 'next-auth/react'
+import { deletePost } from 'services/post.services'
 
 const PostSlug = ({
   postServer: { title, author },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const { slug } = router.query
+  const { data: session } = useSession()
   const { post, isLoading } = usePost(slug as string)
 
   const md = new MarkdownIt()
+
+  const deletePostByOwnUser = async () => {
+    await deletePost(slug as string)
+    router.push('/blog')
+  }
 
   return (
     <div className="w-full max-w-4xl px-2 mx-auto mt-10">
@@ -49,6 +47,15 @@ const PostSlug = ({
             ? 'Cargando fecha...'
             : `🗓 ${new Date(post?.createdAt || '').toLocaleDateString()}`}
         </p>
+
+        {post?.authorId === session?.user?.id && (
+          <button
+            onClick={deletePostByOwnUser}
+            className="mt-4 w-full bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Borrar este articulo 🗑
+          </button>
+        )}
       </div>
 
       <div className="prose max-w-none lg:prose-base prose-sm dark:prose-invert prose-red mt-16">
@@ -85,7 +92,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   return {
     props: {
       postServer: post,
-    } as Props,
+    },
   }
 }
 

@@ -6,8 +6,13 @@ export const createProfile = async (idUser: string | undefined, bio: string) =>
     bio,
   })
 
-export const updateProfile = async (idUser: string | undefined, bio: string) =>
+export const updateProfile = async (
+  idUser: string | undefined,
+  bio: string,
+  birthday: string
+) =>
   await axios.put('/api/users/updateProfile', {
     idUser,
     bio,
+    birthday: new Date(birthday).getTime(),
   })

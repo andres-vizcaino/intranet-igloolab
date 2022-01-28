@@ -29,3 +29,7 @@ export const createPost = async ({
     published,
   })
 }
+
+export const deletePost = async (slug: string) => {
+  await axios.delete(`/api/posts/${slug}`)
+}

@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
+import { getTimeAgo } from 'utils/getTimeAgo'
 
 const Profile: NextPage = () => {
   const { data, error } = useSWR<IUser[]>('/api/users')
@@ -25,6 +26,9 @@ const Profile: NextPage = () => {
                 layout="fixed"
               />
               <p className="mt-5">{user.name}</p>
+              {user.profile?.birthday && (
+                <p className="text-xs">{getTimeAgo(user.profile.birthday)}</p>
+              )}
             </div>
           </Link>
         ))}
