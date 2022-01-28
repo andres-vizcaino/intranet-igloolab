@@ -7,4 +7,5 @@ export interface ITweet {
   updatedAt: number
   userId: string
   author: User
+  like?: number
 }

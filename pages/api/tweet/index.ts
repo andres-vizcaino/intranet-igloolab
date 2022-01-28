@@ -9,10 +9,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const tweets = await prisma.tweet.findMany({
-    select: {
-      id: true,
-      body: true,
-      createdAt: true,
+    include: {
       author: {
         select: {
           id: true,
@@ -20,8 +17,6 @@ export default async function handler(
           image: true,
         },
       },
-      userId: true,
-      updatedAt: true,
     },
     orderBy: {
       createdAt: 'desc',

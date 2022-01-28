@@ -9,14 +9,25 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { id } = req.query
-
+  const { like } = req.body
   if (req.method === 'DELETE') {
     const response = await prisma.tweet.delete({
       where: {
         id: Number(id),
       },
     })
+    res.status(200).json(response)
+  }
 
+  if (req.method === 'PUT') {
+    const response = await prisma.tweet.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        like,
+      },
+    })
     res.status(200).json(response)
   }
 }

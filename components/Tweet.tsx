@@ -2,16 +2,24 @@ import { ITweet } from 'models/Tweet.model'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { deleteTweet } from 'services/tweet.services'
+import { deleteTweet, updateLike } from 'services/tweet.services'
 import { useSWRConfig } from 'swr'
 import { getTimeAgo } from 'utils/getTimeAgo'
+import { useState } from 'react'
 
-const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
+const Tweet = ({ author, userId, body, createdAt, id, like }: ITweet) => {
   const { data: session } = useSession()
+  const [likes, setLikes] = useState<number>(like || 0)
   const { mutate } = useSWRConfig()
 
   const handleClickDelete = async () => {
     await deleteTweet(id)
+    mutate('/api/tweet')
+  }
+
+  const handleLike = async () => {
+    setLikes(likes + 1)
+    await updateLike(id, likes)
     mutate('/api/tweet')
   }
 
@@ -48,8 +56,15 @@ const Tweet = ({ author, userId, body, createdAt, id }: ITweet) => {
           />
         )}
       </div>
-
       <p className="mt-5 break-normal">{body}</p>
+      <div className="mt-4">
+        <button
+          onClick={handleLike}
+          className="mt-4 max-w-lg bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          {like} 👍
+        </button>
+      </div>
     </div>
   )
 }
