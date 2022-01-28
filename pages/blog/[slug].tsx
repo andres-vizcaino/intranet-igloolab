@@ -3,6 +3,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import MarkdownIt from 'markdown-it'
 import prisma from 'lib/prisma'
+import Image from 'next/image'
+import Link from 'next/link'
 
 type Props = {
   postServer: {
@@ -11,12 +13,11 @@ type Props = {
       image: string | null
       name: string | null
     }
-    content: string | null
   } | null
 }
 
 const PostSlug = ({
-  postServer: { title, author, content },
+  postServer: { title, author },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const { slug } = router.query
@@ -28,7 +29,21 @@ const PostSlug = ({
     <div className="w-full max-w-4xl px-2 mx-auto mt-10">
       <h1 className="text-3xl md:text-5xl font-semibold">{title}</h1>
       <div className="mt-5">
-        <p>✏️ {author.name || 'Unknown author'}</p>
+        <div className="inline-flex items-center gap-2">
+          <Image
+            src={author.image}
+            alt={`Foto de ${author.name}`}
+            width={32}
+            height={32}
+            loading="lazy"
+            className="rounded-full"
+          />
+          <Link href={`/profile/${author.id}`}>
+            <a className="text-sm">
+              <span className="font-semibold">{author.name}</span>
+            </a>
+          </Link>
+        </div>
         <p>
           {isLoading
             ? 'Cargando fecha...'
@@ -37,9 +52,13 @@ const PostSlug = ({
       </div>
 
       <div className="prose max-w-none lg:prose-base prose-sm dark:prose-invert prose-red mt-16">
-        <div
-          dangerouslySetInnerHTML={{ __html: md.render(content || '') }}
-        ></div>
+        {isLoading ? (
+          <p>Cargando contenido...</p>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{ __html: md.render(post?.content || '') }}
+          ></div>
+        )}
       </div>
     </div>
   )
@@ -53,10 +72,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
     select: {
       title: true,
-      content: true,
       author: {
         select: {
           name: true,
+          id: true,
           image: true,
         },
       },
