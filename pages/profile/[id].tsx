@@ -33,6 +33,7 @@ const ProfileId: NextPage = () => {
 
   const handleClick = () => {
     seteditProfile(true)
+    console.log(user?.profile?.birthday || '')
 
     setProfileData({
       ...profileData,
