@@ -50,7 +50,7 @@ model User {
   profile       Profile?
   tweets        Tweet[]
   posts         Post[]
-
+  tweetsLike    Tweet[]   @relation("likes", references: [id])
 }
 
 model VerificationToken {
@@ -76,6 +76,7 @@ model Tweet {
   updatedAt DateTime @default(now()) @map("updated_at")
   author    User     @relation(fields: [userId], references: [id])
   userId    String
+  likesBy   User[]   @relation(name: "likes", references: [id])
 
   @@map("tweets")
 }
