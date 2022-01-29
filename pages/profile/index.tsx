@@ -3,6 +3,10 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
+import {
+  diffDaysToNow,
+  getDateToStringWithCurrentYear,
+} from 'utils/getDayandMonth'
 
 const Profile: NextPage = () => {
   const { data, error } = useSWR<IUser[]>('/api/users')
@@ -13,21 +17,34 @@ const Profile: NextPage = () => {
     <div>
       <p className="text-center text-2xl">Directorio</p>
       <div className="flex gap-10 flex-wrap mt-10 justify-center">
-        {data?.map((user) => (
-          <Link href={`/profile/${user.id}`} passHref key={user.id}>
-            <div className="flex flex-col justify-center items-center">
-              <Image
-                src={user?.image}
-                alt={`Foto de perfil ${user.name}`}
-                width={120}
-                height={120}
-                className="rounded-t-lg"
-                layout="fixed"
-              />
-              <p className="mt-5">{user.name}</p>
-            </div>
-          </Link>
-        ))}
+        {data?.map((user) => {
+          const daysLeft = diffDaysToNow(
+            getDateToStringWithCurrentYear(user.profile?.birthday || '')
+          )
+          return (
+            <Link href={`/profile/${user.id}`} passHref key={user.id}>
+              <div className="flex flex-col justify-center items-center">
+                <Image
+                  src={user?.image}
+                  alt={`Foto de perfil ${user.name}`}
+                  width={120}
+                  height={120}
+                  className="rounded-t-lg"
+                  layout="fixed"
+                  priority
+                />
+                <p className="mt-5 font-semibold">{user.name}</p>
+                {daysLeft <= 10 && daysLeft > 0 && (
+                  <p className="text-sm">
+                    🎂 en {daysLeft} día{daysLeft === 1 ? '' : 's'}
+                  </p>
+                )}
+
+                {daysLeft == 0 && <p className="text-sm">🎉 Hoy cumpleaños</p>}
+              </div>
+            </Link>
+          )
+        })}
       </div>
     </div>
   )

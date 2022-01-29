@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { updateProfile } from 'services/profile.services'
+import { getDayandMonthName } from 'utils/getDayandMonth'
+import { getStringToDate } from 'utils/getStringToDate'
 import { getTimeAgo } from 'utils/getTimeAgo'
 
 const ProfileId: NextPage = () => {
@@ -14,7 +16,10 @@ const ProfileId: NextPage = () => {
   const { id } = router.query
   const [ownProfile, setownProfile] = useState(false)
   const [editProfile, seteditProfile] = useState(false)
-  const [bio, setBio] = useState('')
+  const [profileData, setProfileData] = useState({
+    bio: '',
+    birthday: '',
+  })
   const { data: session } = useSession()
   const { isLoading, user, isError, mutate } = useUser(id as string)
 
@@ -28,12 +33,22 @@ const ProfileId: NextPage = () => {
 
   const handleClick = () => {
     seteditProfile(true)
-    setBio(user?.profile?.bio || '')
+
+    setProfileData({
+      ...profileData,
+      bio: user?.profile?.bio || '',
+      birthday: getStringToDate(user?.profile?.birthday || ''),
+    })
   }
 
   const handleEditBio = async () => {
-    await updateProfile(id as string, bio)
-    mutate()
+    if (
+      profileData.bio !== user?.profile?.bio ||
+      profileData.birthday !== user?.profile?.birthday
+    ) {
+      await updateProfile(id as string, profileData.bio, profileData.birthday)
+      mutate()
+    }
     seteditProfile(false)
   }
 
@@ -57,14 +72,39 @@ const ProfileId: NextPage = () => {
           {user?.profile ? (
             <>
               {editProfile ? (
-                <textarea
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
-                  value={bio}
-                  onChange={({ target }) => setBio(target.value)}
-                  placeholder="Escribe aquí tu biografía"
-                />
+                <div className="text-center">
+                  <textarea
+                    autoFocus
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
+                    value={profileData.bio}
+                    onChange={({ target }) =>
+                      setProfileData({ ...profileData, bio: target.value })
+                    }
+                    placeholder="Escribe aquí tu biografía"
+                  />
+                  <div className="inline-flex gap-2 items-center">
+                    <label htmlFor="birthday">Fecha de 🎂</label>
+                    <input
+                      id="birthday"
+                      className="shadow appearance-none border rounded w-auto py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
+                      type="date"
+                      value={profileData.birthday}
+                      onChange={({ target }) =>
+                        setProfileData({
+                          ...profileData,
+                          birthday: target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
               ) : (
-                <p className="text-center text-lg">{user?.profile?.bio}</p>
+                <div>
+                  <p className="text-center text-lg">{user?.profile?.bio}</p>
+                  <p className="text-center text-lg">
+                    🎂 {getDayandMonthName(user?.profile?.birthday)}
+                  </p>
+                </div>
               )}
               {ownProfile && (
                 <button

@@ -9,7 +9,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const { idUser, bio } = req.body
+    const { idUser, bio, birthday } = req.body
     const response = await prisma.profile.create({
       data: {
         user: {
@@ -18,6 +18,7 @@ export default async function handler(
           },
         },
         bio,
+        birthday: new Date(birthday),
       },
     })
 

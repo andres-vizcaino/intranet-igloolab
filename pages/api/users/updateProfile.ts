@@ -9,13 +9,14 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'PUT') {
-    const { idUser, bio } = req.body
+    const { idUser, bio, birthday } = req.body
     const response = await prisma.profile.update({
       where: {
         userId: idUser,
       },
       data: {
         bio,
+        birthday: new Date(birthday),
       },
     })
 
