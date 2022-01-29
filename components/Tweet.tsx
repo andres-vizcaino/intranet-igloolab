@@ -11,14 +11,15 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
   const { data: session } = useSession()
   const { mutate } = useSWRConfig()
   const [isLiked, setIsLiked] = useState(false)
-  const [likes, setLikes] = useState(likesBy.length)
+  const [likes, setLikes] = useState(0)
 
   useEffect(() => {
-    setIsLiked(likesBy.some((user) => user.id === session?.user?.id))
+    if (likesBy)
+      setIsLiked(likesBy.some((user) => user.id === session?.user?.id))
   }, [likesBy, session])
 
   useEffect(() => {
-    setLikes(likesBy.length)
+    if (likesBy) setLikes(likesBy.length)
   }, [likesBy])
 
   const handleClickDelete = async () => {

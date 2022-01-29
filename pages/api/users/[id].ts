@@ -24,6 +24,7 @@ export default async function handler(
       tweets: {
         include: {
           author: true,
+          likesBy: true,
         },
         orderBy: {
           createdAt: 'desc',
