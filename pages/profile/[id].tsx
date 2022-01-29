@@ -33,7 +33,6 @@ const ProfileId: NextPage = () => {
 
   const handleClick = () => {
     seteditProfile(true)
-    console.log(user?.profile?.birthday || '')
 
     setProfileData({
       ...profileData,
@@ -45,7 +44,7 @@ const ProfileId: NextPage = () => {
   const handleEditBio = async () => {
     if (
       profileData.bio !== user?.profile?.bio ||
-      profileData.birthday !== user?.profile?.birthday
+      profileData.birthday !== getStringToDate(user?.profile?.birthday || '')
     ) {
       await updateProfile(id as string, profileData.bio, profileData.birthday)
       mutate()
