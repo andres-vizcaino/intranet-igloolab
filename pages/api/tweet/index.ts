@@ -18,7 +18,11 @@ export default async function handler(
         },
       },
       userId: true,
-      likesBy: true,
+      likesBy: {
+        select: {
+          id: true,
+        },
+      },
     },
     orderBy: {
       createdAt: 'desc',
