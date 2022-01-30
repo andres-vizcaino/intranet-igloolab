@@ -29,11 +29,11 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
 
   const handleClickLike = async () => {
     if (!isLiked) {
-      await likeTweet(id, session?.user?.id)
       setLikes(likes + 1)
+      await likeTweet(id, session?.user?.id)
     } else {
-      await unlikeTweet(id, session?.user?.id)
       setLikes(likes - 1)
+      await unlikeTweet(id, session?.user?.id)
     }
 
     setIsLiked(!isLiked)
@@ -75,9 +75,9 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
       </div>
 
       <p className="mt-5 break-normal">{body}</p>
-      <div className="flex space-x-5 pt-3 text-gray-500 border-t border-gray-300">
+      <div className="flex space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
         <div
-          className={`flex space-x-2 hover:text-pink-700 cursor-pointer ${
+          className={`flex space-x-2 cursor-pointer ${
             isLiked && 'text-pink-700'
           }`}
           onClick={handleClickLike}

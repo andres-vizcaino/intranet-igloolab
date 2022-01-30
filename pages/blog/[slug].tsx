@@ -5,6 +5,9 @@ import MarkdownIt from 'markdown-it'
 import prisma from 'lib/prisma'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { deletePost } from 'services/post.services'
 
 type Props = {
   postServer: {
@@ -17,13 +20,26 @@ type Props = {
 }
 
 const PostSlug = ({
-  postServer: { title, author },
+  postServer: { title, author, content },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const { slug } = router.query
   const { post, isLoading } = usePost(slug as string)
+  const { data: session } = useSession()
+  const [isOwn, setIsOwn] = useState(false)
+
+  useEffect(() => {
+    if (session?.user) {
+      setIsOwn(session.user.id === author.id)
+    }
+  }, [session, author])
 
   const md = new MarkdownIt()
+
+  const handleClickDelete = async () => {
+    await deletePost(post?.slug || '')
+    router.push('/blog')
+  }
 
   return (
     <div className="w-full max-w-4xl px-2 mx-auto mt-10">
@@ -49,6 +65,14 @@ const PostSlug = ({
             ? 'Cargando fecha...'
             : `🗓 ${new Date(post?.createdAt || '').toLocaleDateString()}`}
         </p>
+        {isOwn && (
+          <button
+            onClick={handleClickDelete}
+            className="mt-5 w-full bg-red-700 dark:bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Eliminar post 🗑
+          </button>
+        )}
       </div>
 
       <div className="prose max-w-none lg:prose-base prose-sm dark:prose-invert prose-red mt-16">
@@ -56,7 +80,7 @@ const PostSlug = ({
           <p>Cargando contenido...</p>
         ) : (
           <div
-            dangerouslySetInnerHTML={{ __html: md.render(post?.content || '') }}
+            dangerouslySetInnerHTML={{ __html: md.render(content || '') }}
           ></div>
         )}
       </div>
@@ -79,6 +103,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
           image: true,
         },
       },
+      content: true,
     },
   })
 

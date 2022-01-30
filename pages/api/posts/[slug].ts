@@ -22,4 +22,14 @@ export default async function handler(
 
     res.status(200).json(post)
   }
+
+  if (req.method === 'DELETE') {
+    const post = await prisma.post.delete({
+      where: {
+        slug: slug as string,
+      },
+    })
+
+    res.status(200).json(post)
+  }
 }
