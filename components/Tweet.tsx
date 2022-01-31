@@ -28,6 +28,7 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
   }
 
   const handleClickLike = async () => {
+    setIsLiked(!isLiked)
     if (!isLiked) {
       setLikes(likes + 1)
       await likeTweet(id, session?.user?.id)
@@ -35,8 +36,6 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
       setLikes(likes - 1)
       await unlikeTweet(id, session?.user?.id)
     }
-
-    setIsLiked(!isLiked)
   }
 
   return (

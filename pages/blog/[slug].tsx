@@ -1,23 +1,13 @@
 import usePost from 'hooks/usePost'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
-import MarkdownIt from 'markdown-it'
 import prisma from 'lib/prisma'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { deletePost } from 'services/post.services'
-
-type Props = {
-  postServer: {
-    title: string
-    author: {
-      image: string | null
-      name: string | null
-    }
-  } | null
-}
+import { markdownToHtml } from 'utils/markdownToHtml'
 
 const PostSlug = ({
   postServer: { title, author, content },
@@ -33,8 +23,6 @@ const PostSlug = ({
       setIsOwn(session.user.id === author.id)
     }
   }, [session, author])
-
-  const md = new MarkdownIt()
 
   const handleClickDelete = async () => {
     await deletePost(post?.slug || '')
@@ -76,13 +64,7 @@ const PostSlug = ({
       </div>
 
       <div className="prose max-w-none lg:prose-base prose-sm dark:prose-invert prose-red mt-16">
-        {isLoading ? (
-          <p>Cargando contenido...</p>
-        ) : (
-          <div
-            dangerouslySetInnerHTML={{ __html: md.render(content || '') }}
-          ></div>
-        )}
+        <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </div>
     </div>
   )
@@ -107,10 +89,15 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   })
 
+  const content = await markdownToHtml(post?.content || '')
+
   return {
     props: {
-      postServer: post,
-    } as Props,
+      postServer: {
+        ...post,
+        content,
+      },
+    },
   }
 }
 
