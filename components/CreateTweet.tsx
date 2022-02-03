@@ -91,7 +91,6 @@ const CreateTweet = () => {
                     placeholder="Escribe aqui tu estado"
                     maxLength={280}
                     autoFocus
-                    contentEditable
                     value={status}
                     onChange={handleOnChange}
                     style={{ height: 220 }}
@@ -117,6 +116,13 @@ const CreateTweet = () => {
                   >
                     Crear 👍
                   </button>
+                </div>
+
+                <div className="mt-5 flex space-x-5 border-t border-gray-300">
+                  <span className="mt-3 text-xs">
+                    ¿Deseas agregar un Link? dejalo de ultimo en tu tweet
+                    {' 🚀 '}
+                  </span>
                 </div>
               </form>
             </Transition.Child>

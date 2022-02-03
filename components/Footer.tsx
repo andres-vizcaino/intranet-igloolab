@@ -8,7 +8,7 @@ const Footer = () => (
       </a>
     </Link>
     <> </>
-    <span className="text-red-500 font-normal">v0.1.3</span>
+    <span className="text-red-500 font-normal">v0.2.0</span>
   </footer>
 )
 

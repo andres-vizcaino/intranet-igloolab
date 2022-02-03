@@ -6,6 +6,9 @@ import { useEffect, useState } from 'react'
 import { deleteTweet, likeTweet, unlikeTweet } from 'services/tweet.services'
 import { useSWRConfig } from 'swr'
 import { getTimeAgo } from 'utils/getTimeAgo'
+import { getLinkFromText, linkify } from 'utils/linkify'
+import { LinkPreview } from '@dhaiwat10/react-link-preview'
+import { getMetadataFromUrl } from 'utils/getMetadataFromUrl'
 
 const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
   const { data: session } = useSession()
@@ -73,8 +76,23 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
         )}
       </div>
 
-      <p className="mt-5 break-normal">{body}</p>
-      <div className="flex space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
+      <p
+        className="mt-5 break-normal mb-5"
+        dangerouslySetInnerHTML={{ __html: linkify(body) }}
+      />
+
+      {getLinkFromText(body) && (
+        <LinkPreview
+          url={getLinkFromText(body)?.toString() || ''}
+          showLoader
+          openInNewTab
+          fallback={null}
+          descriptionLength={100}
+          fetcher={getMetadataFromUrl}
+        />
+      )}
+
+      <div className="mt-5 flex space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
         <div
           className={`flex space-x-2 cursor-pointer ${
             isLiked && 'text-pink-700'
