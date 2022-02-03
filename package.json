@@ -8,11 +8,13 @@
     "test": "jest"
   },
   "dependencies": {
+    "@dhaiwat10/react-link-preview": "^1.12.2",
     "@headlessui/react": "^1.4.3",
     "@next-auth/prisma-adapter": "^1.0.1",
     "@prisma/client": "^3.8.1",
     "@tailwindcss/typography": "^0.5.0",
     "axios": "^0.25.0",
+    "canvas-confetti": "^1.4.0",
     "markdown-it": "^12.3.2",
     "next": "12.0.9",
     "next-auth": "^4.1.2",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
+    "@types/canvas-confetti": "^1.4.2",
     "@types/jest": "^27.4.0",
     "@types/markdown-it": "^12.2.3",
     "@types/next-auth": "^3.15.0",

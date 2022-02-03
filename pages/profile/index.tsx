@@ -7,6 +7,7 @@ import {
   diffDaysToNow,
   getDateToStringWithCurrentYear,
 } from 'utils/getDayandMonth'
+import { allConfetti } from 'utils/fireworks-conffeti'
 
 const Profile: NextPage = () => {
   const { data, error } = useSWR<IUser[]>('/api/users')
@@ -21,6 +22,7 @@ const Profile: NextPage = () => {
           const daysLeft = diffDaysToNow(
             getDateToStringWithCurrentYear(user.profile?.birthday || '')
           )
+          if (daysLeft == 0) allConfetti()
           return (
             <Link href={`/profile/${user.id}`} passHref key={user.id}>
               <div className="flex flex-col justify-center items-center">
