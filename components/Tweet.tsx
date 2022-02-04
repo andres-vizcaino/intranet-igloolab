@@ -77,7 +77,7 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
       </div>
 
       <p
-        className="mt-5 break-normal mb-5"
+        className="mt-5 break-words mb-5"
         dangerouslySetInnerHTML={{ __html: linkify(body) }}
       />
 
@@ -86,7 +86,14 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
           url={getLinkFromText(body)?.toString() || ''}
           showLoader
           openInNewTab
-          fallback={null}
+          fallback={
+            session?.user?.id === userId ? (
+              <p className="text-xs text-red-500">
+                Lo sentimos, no encontramos una pre-visualización para tu link
+                🥺
+              </p>
+            ) : null
+          }
           descriptionLength={100}
           fetcher={getMetadataFromUrl}
         />
