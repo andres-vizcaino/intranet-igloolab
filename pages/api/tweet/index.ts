@@ -21,6 +21,7 @@ export default async function handler(
       likesBy: {
         select: {
           id: true,
+          name: true,
         },
       },
     },

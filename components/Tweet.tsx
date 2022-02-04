@@ -9,21 +9,23 @@ import { getTimeAgo } from 'utils/getTimeAgo'
 import { getLinkFromText, linkify } from 'utils/linkify'
 import { LinkPreview } from '@dhaiwat10/react-link-preview'
 import { getMetadataFromUrl } from 'utils/getMetadataFromUrl'
+import { getNamesFromArray } from 'utils/getNamesFromArray'
 
 const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
   const { data: session } = useSession()
   const { mutate } = useSWRConfig()
   const [isLiked, setIsLiked] = useState(false)
   const [likes, setLikes] = useState(0)
+  const [nameLikes, setNameLikes] = useState('')
 
   useEffect(() => {
-    if (likesBy)
+    if (likesBy) {
+      if (likesBy) setLikes(likesBy.length)
+
       setIsLiked(likesBy.some((user) => user.id === session?.user?.id))
+      setNameLikes(getNamesFromArray(likesBy, session?.user?.id))
+    }
   }, [likesBy, session])
-
-  useEffect(() => {
-    if (likesBy) setLikes(likesBy.length)
-  }, [likesBy])
 
   const handleClickDelete = async () => {
     await deleteTweet(id)
@@ -99,7 +101,7 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
         />
       )}
 
-      <div className="mt-5 flex space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
+      <div className="mt-5 flex justify-between space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
         <div
           className={`flex space-x-2 cursor-pointer ${
             isLiked && 'text-pink-700'
@@ -116,6 +118,9 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
           </svg>
           <span> {likes} igloo-Likes</span>
+        </div>
+        <div>
+          <span className="text-xs">{nameLikes}</span>
         </div>
       </div>
     </div>
