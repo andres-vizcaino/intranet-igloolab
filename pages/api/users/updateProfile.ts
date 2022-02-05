@@ -5,21 +5,21 @@ import { Profile } from '@prisma/client'
 type Data = Profile
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse<Data>
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
 ) {
-    if (req.method === 'PUT') {
-        const { idUser, bio, birthday } = req.body
-        const response = await prisma.profile.update({
-            where: {
-                userId: idUser,
-            },
-            data: {
-                bio,
-                birthday: new Date(birthday),
-            },
-        })
+  if (req.method === 'PUT') {
+    const { idUser, bio, birthday } = req.body
+    const response = await prisma.profile.update({
+      where: {
+        userId: idUser,
+      },
+      data: {
+        bio,
+        birthday: new Date(birthday),
+      },
+    })
 
-        res.status(200).json(response)
-    }
+    res.status(200).json(response)
+  }
 }

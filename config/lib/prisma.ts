@@ -2,7 +2,7 @@
 import { PrismaClient } from '@prisma/client'
 
 declare global {
-    var prisma: PrismaClient | undefined
+  var prisma: PrismaClient | undefined
 }
 
 // create only one prisma client instance for development
