@@ -1,15 +1,13 @@
-import { Todo } from 'data/todo.data'
+import { IItemsColumn } from 'models/Board.model'
 import { Draggable } from 'react-beautiful-dnd'
 import TaskInformation from './TaskInformation'
 
 type Props = {
-  item: Todo
+  item: IItemsColumn
   index: number
-  deleteTask: (colunmID: string, taskID: string) => void
-  columnId: string
 }
 
-const TaskCard = ({ item, index, deleteTask, columnId }: Props) => (
+const TaskCard = ({ item, index }: Props) => (
   <Draggable draggableId={item.id} index={index}>
     {(provided) => (
       <div
@@ -18,11 +16,11 @@ const TaskCard = ({ item, index, deleteTask, columnId }: Props) => (
         {...provided.dragHandleProps}
       >
         <TaskInformation>
-          <p>{item.Task}</p>
+          <p>{item.description}</p>
           <div className="secondary-details">
             <p>
               <span>
-                {new Date(item.Due_Date).toLocaleDateString('en-es', {
+                {new Date(item.createdAt).toLocaleDateString('en-es', {
                   month: 'short',
                   day: '2-digit',
                 })}
@@ -30,10 +28,7 @@ const TaskCard = ({ item, index, deleteTask, columnId }: Props) => (
             </p>
           </div>
         </TaskInformation>
-        <button
-          onClick={() => deleteTask(columnId, item.id)}
-          className="bg-red-600 p-2 text-white text-sm rounded-lg"
-        >
+        <button className="bg-red-600 p-2 text-white text-sm rounded-lg">
           Eliminar tarea
         </button>
       </div>

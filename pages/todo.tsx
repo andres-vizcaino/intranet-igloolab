@@ -1,8 +1,57 @@
-import TaskCard from 'components/todo/TaskCard'
 import { columnsFromBackend, ColumnTodo, Todo } from 'data/todo.data'
 import { NextPage } from 'next'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd'
+import { Dispatch, ReactNode, SetStateAction, useEffect, useState } from 'react'
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from 'react-beautiful-dnd'
+
+type Props = {
+  item: Todo
+  index: number
+  deleteTask: (colunmID: string, taskID: string) => void
+  columnId: string
+}
+
+const TaskCard = ({ item, index, deleteTask, columnId }: Props) => (
+  <Draggable draggableId={item.id} index={index}>
+    {(provided) => (
+      <div
+        ref={provided.innerRef}
+        {...provided.draggableProps}
+        {...provided.dragHandleProps}
+      >
+        <TaskInformation>
+          <p>{item.Task}</p>
+          <div className="secondary-details">
+            <p>
+              <span>
+                {new Date(item.Due_Date).toLocaleDateString('en-es', {
+                  month: 'short',
+                  day: '2-digit',
+                })}
+              </span>
+            </p>
+          </div>
+        </TaskInformation>
+        <button
+          onClick={() => deleteTask(columnId, item.id)}
+          className="bg-red-600 p-2 text-white text-sm rounded-lg"
+        >
+          Eliminar tarea
+        </button>
+      </div>
+    )}
+  </Draggable>
+)
+
+const TaskInformation = ({ children }: { children: ReactNode }) => (
+  <div className="flex flex-col justify-center items-start px-4 min-h-min rounded-md bg-white mt-4 ">
+    {children}
+  </div>
+)
 
 const TodoPage: NextPage = () => {
   const [columns, setColumns] = useState<ColumnTodo>(columnsFromBackend)
@@ -96,7 +145,7 @@ const TodoPage: NextPage = () => {
   }
 
   return (
-    <div className="overflow-auto min-h-screen">
+    <div className="overflow-x-scroll min-h-min">
       {isBrowser ? (
         <DragDropContext
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
@@ -107,7 +156,7 @@ const TodoPage: NextPage = () => {
                 <Droppable key={columnId} droppableId={columnId}>
                   {(provided) => (
                     <div
-                      className="min-h-full flex flex-col bg-gray-500 w-96 rounded-md p-4 mr-11"
+                      className="min-h-full flex flex-col bg-gray-500 w-96 min-w-fit  rounded-md p-4 mr-11"
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                     >
