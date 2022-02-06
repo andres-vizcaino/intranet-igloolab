@@ -96,7 +96,7 @@ const TodoPage: NextPage = () => {
   }
 
   return (
-    <div className="overflow-x-auto min-h-screen">
+    <div className="overflow-auto min-h-screen">
       {isBrowser ? (
         <DragDropContext
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
