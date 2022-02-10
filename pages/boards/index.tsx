@@ -6,10 +6,19 @@ import { useState } from 'react'
 import { deleteBoard } from 'services/todo.services'
 import useSWR from 'swr'
 import Image from 'next/image'
+import { useSession } from 'next-auth/react'
 
 const BoardsPage: NextPage = () => {
-  const { data, error, mutate } = useSWR<Board[]>('/api/todo')
+  const { data: session, status } = useSession()
+  const { data, error, mutate } = useSWR<Board[]>(
+    `/api/todo/board/${session?.user.id}`
+  )
+
   const [isOpen, setIsOpen] = useState(false)
+
+  if (status === 'unauthenticated' || session == null) {
+    return <div className="text-center text-4xl">No estás conectado. 🥲</div>
+  }
 
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
