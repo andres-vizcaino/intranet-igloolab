@@ -100,14 +100,14 @@ const ColumnTodo = ({
             <input
               type="text"
               placeholder="Agregar tarea"
-              className="w-full p-2 bg-gray-200 rounded-md"
+              className="w-full p-2 bg-gray-200 rounded-md dark:text-black"
               value={newTaskInput}
               onChange={(e) => setNewTaskInput(e.target.value)}
             />
             <button onClick={addTask}>➕</button>
           </div>
           <button
-            className="mt-10 bg-red-500 text-white"
+            className="mt-10 bg-red-500 text-white rounded-lg"
             onClick={() => deleteOneColumn(id || '')}
           >
             Eliminar
