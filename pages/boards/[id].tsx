@@ -12,8 +12,13 @@ const BoardPage: NextPage = () => {
   if (isError) return <p>Error</p>
   if (isLoading) return <p>Loading</p>
   return (
-    <div className="bg-slate-400">
-      <TodoApp columnsBoard={board?.columns || []} />
+    <div>
+      <div className="text-center my-10">
+        <h2 className="text-4xl font-bold">{board?.name}</h2>
+        <p>{board?.description}</p>
+        <p>🗓 {new Date(board?.createdAt || '').toLocaleDateString()}</p>
+      </div>
+      <TodoApp columnsBoard={board?.columns || []} boardId={board?.id} />
     </div>
   )
 }

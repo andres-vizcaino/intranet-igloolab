@@ -1,13 +1,20 @@
 import { IColumn } from 'models/Board.model'
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { DropResult, DragDropContext, Droppable } from 'react-beautiful-dnd'
-import TaskCard from './TaskCard'
+import { DropResult, DragDropContext } from 'react-beautiful-dnd'
+import {
+  createColumn,
+  deleteColumn,
+  deleteItemColumn,
+  editItemColumn,
+} from 'services/todo.services'
+import ColumnTodo from './ColumnTodo'
 
 type Props = {
+  boardId: string | undefined
   columnsBoard: IColumn[]
 }
 
-const TodoApp = ({ columnsBoard }: Props) => {
+const TodoApp = ({ columnsBoard, boardId }: Props) => {
   const [columns, setColumns] = useState<IColumn[]>(columnsBoard)
   const [isBrowser, setIsBrowser] = useState(false)
 
@@ -15,7 +22,7 @@ const TodoApp = ({ columnsBoard }: Props) => {
     setIsBrowser(process.browser)
   }, [])
 
-  const onDragEnd = (
+  const onDragEnd = async (
     result: DropResult,
     columns: IColumn[],
     setColumns: Dispatch<SetStateAction<IColumn[]>>
@@ -23,18 +30,19 @@ const TodoApp = ({ columnsBoard }: Props) => {
     if (!result.destination) return
     const { source, destination } = result
     if (source.droppableId !== destination.droppableId) {
-      console.log('destination.droppableId: ' + destination.droppableId)
-      console.log('source.droppableId: ' + source.droppableId)
-
       const sourceColumn = columns.find(
         (column) => source.droppableId === column.id
       )
+      console.table(sourceColumn)
+
       const destColumn = columns.find(
         (column) => destination.droppableId === column.id
       )
       const sourceItems = [...(sourceColumn?.items || [])]
       const destItems = [...(destColumn?.items || [])]
+
       const [removed] = sourceItems.splice(source.index, 1)
+
       destItems.splice(destination.index, 0, removed)
 
       setColumns([
@@ -52,6 +60,8 @@ const TodoApp = ({ columnsBoard }: Props) => {
           items: destItems,
         },
       ])
+
+      await editItemColumn(removed.id, destColumn?.id || '')
     } else {
       const column = columns.find((column) => source.droppableId === column.id)
       const copiedItems = [...(column?.items || [])]
@@ -67,6 +77,32 @@ const TodoApp = ({ columnsBoard }: Props) => {
     }
   }
 
+  const addNewColumn = async () => {
+    const newColumn = await createColumn('Nueva columna', boardId || '')
+    setColumns([...columns, newColumn])
+  }
+
+  const deleteOneColumn = async (id: string) => {
+    await deleteColumn(id)
+    setColumns(columns.filter((column) => column.id !== id))
+  }
+
+  const deleteItem = async (id: string, columnId: string) => {
+    await deleteItemColumn(id)
+
+    setColumns(
+      columns.map((column) => {
+        if (column.id === columnId) {
+          return {
+            ...column,
+            items: column.items?.filter((item) => item.id !== id),
+          }
+        }
+        return column
+      })
+    )
+  }
+
   return (
     <div className="overflow-x-scroll min-h-min">
       {isBrowser ? (
@@ -74,7 +110,7 @@ const TodoApp = ({ columnsBoard }: Props) => {
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
         >
           <div className="flex">
-            <div className="m-2 flex w-full min-h-min">
+            <div className="m-2 flex mb-11 min-h-min items-baseline">
               {/* FIXME: ENCONTRAR LA FORMA DE QUE ESTO NO DEBA ORDENARLO POR FECHA, SI NO QUE LAS POSISIONES DE CADA TABLERO NO CAMBIE */}
               {columns
                 .sort(function (a, b) {
@@ -84,30 +120,26 @@ const TodoApp = ({ columnsBoard }: Props) => {
                   )
                 })
                 .map(({ id, items, title }) => (
-                  <Droppable key={id} droppableId={id || ''}>
-                    {(provided) => (
-                      <div
-                        className="min-h-full flex flex-col bg-gray-500 w-96 min-w-fit  rounded-md p-4 mr-11"
-                        ref={provided.innerRef}
-                        {...provided.droppableProps}
-                      >
-                        <span className="text-green-700 bg-lime-100 py-1 px-3 rounded-sm self-start">
-                          {title}
-                        </span>
-                        {items.map((item, index) => (
-                          <TaskCard key={item.id} item={item} index={index} />
-                        ))}
-                        {provided.placeholder}
-                        <button className="mt-10 p-3 bg-amber-500 rounded-3xl">
-                          agregar tarea
-                        </button>
-                      </div>
-                    )}
-                  </Droppable>
+                  <ColumnTodo
+                    key={id}
+                    id={id}
+                    title={title}
+                    items={items || []}
+                    deleteOneColumn={deleteOneColumn}
+                    deleteItem={deleteItem}
+                    setColumns={setColumns}
+                    columns={columns}
+                  />
                 ))}
 
-              <button className="p-3 bg-slate-700 text-white rounded-xl">
-                agregar tablero
+              <button
+                onClick={addNewColumn}
+                disabled={columns.length >= 5}
+                className="p-3 bg-slate-700 text-white rounded-xl disabled:bg-slate-400"
+              >
+                {columns.length >= 5
+                  ? 'No puedes agregar más columnas 🥲'
+                  : 'Agregar columna'}
               </button>
             </div>
           </div>

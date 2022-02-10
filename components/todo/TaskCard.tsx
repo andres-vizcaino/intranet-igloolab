@@ -5,9 +5,10 @@ import TaskInformation from './TaskInformation'
 type Props = {
   item: IItemsColumn
   index: number
+  deleteItem: (id: string, boardId: string) => void
 }
 
-const TaskCard = ({ item, index }: Props) => (
+const TaskCard = ({ item, index, deleteItem }: Props) => (
   <Draggable draggableId={item.id} index={index}>
     {(provided) => (
       <div
@@ -17,9 +18,9 @@ const TaskCard = ({ item, index }: Props) => (
       >
         <TaskInformation>
           <p>{item.description}</p>
-          <div className="secondary-details">
+          <div className="text-sm">
             <p>
-              <span>
+              <span className="text-gray-500">
                 {new Date(item.createdAt).toLocaleDateString('en-es', {
                   month: 'short',
                   day: '2-digit',
@@ -27,10 +28,13 @@ const TaskCard = ({ item, index }: Props) => (
               </span>
             </p>
           </div>
+          <button
+            className="absolute right-4"
+            onClick={() => deleteItem(item.id, item.columnBoardId)}
+          >
+            ❌
+          </button>
         </TaskInformation>
-        <button className="bg-red-600 p-2 text-white text-sm rounded-lg">
-          Eliminar tarea
-        </button>
       </div>
     )}
   </Draggable>

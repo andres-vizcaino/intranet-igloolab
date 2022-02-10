@@ -35,6 +35,15 @@ const Home: NextPage = () => {
                 Ir al Blog 🍕
               </a>
             </Link>
+
+            <Link href={'/boards'}>
+              <a
+                type="button"
+                className="mt-4 max-w-lg bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Ir tus tableros 📋
+              </a>
+            </Link>
           </div>
           <div className="mt-10 flex flex-col gap-7 justify-center items-center">
             <div className="text-red-500 font-medium">

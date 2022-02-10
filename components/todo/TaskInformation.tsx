@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 const TaskInformation = ({ children }: { children: ReactNode }) => (
-  <div className="flex flex-col justify-center items-start px-4 min-h-min rounded-md bg-white mt-4 ">
+  <div className="flex flex-col relative justify-center items-start px-4 min-h-min rounded-md bg-white dark:bg-zinc-500 mt-4 ">
     {children}
   </div>
 )

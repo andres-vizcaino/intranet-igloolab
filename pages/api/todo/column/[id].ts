@@ -1,39 +1,36 @@
-import { Board } from '@prisma/client'
+import { ColumnBoard } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'lib/prisma'
 
-type Data = Board | null
+type Data = ColumnBoard | null
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   const { id } = req.query
+  const { title } = req.body
 
-  if (req.method === 'GET') {
-    const board = await prisma.board.findUnique({
+  if (req.method === 'PUT') {
+    const column = await prisma.columnBoard.update({
       where: {
         id: id as string,
       },
-      include: {
-        columns: {
-          include: {
-            items: true,
-          },
-        },
+      data: {
+        title: title as string,
       },
     })
 
-    res.status(200).json(board)
+    res.status(200).json(column)
   }
 
   if (req.method === 'DELETE') {
-    const board = await prisma.board.delete({
+    const column = await prisma.columnBoard.delete({
       where: {
         id: id as string,
       },
     })
 
-    res.status(200).json(board)
+    res.status(200).json(column)
   }
 }

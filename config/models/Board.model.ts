@@ -12,7 +12,7 @@ export interface IColumn {
   title?: string
   createdAt?: string
   boardId?: string
-  items: IItemsColumn[]
+  items?: IItemsColumn[]
 }
 
 export interface IItemsColumn {
