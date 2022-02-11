@@ -1,4 +1,3 @@
-
 import useBoard from 'hooks/useBoard'
 import { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/react'

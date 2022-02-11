@@ -1,11 +1,7 @@
 import { IColumn, IItemsColumn } from 'models/Board.model'
 import { Dispatch, SetStateAction, useState } from 'react'
 import { Droppable } from 'react-beautiful-dnd'
-import {
-  createItemColumn,
-  deleteItemColumn,
-  editColumn,
-} from 'services/todo.services'
+import { createItemColumn, editColumn } from 'services/todo.services'
 import TaskCard from './TaskCard'
 
 type Props = {
