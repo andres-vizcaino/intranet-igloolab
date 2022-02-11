@@ -51,6 +51,7 @@ model User {
   tweets        Tweet[]
   posts         Post[]
   tweetsLike    Tweet[]   @relation("likes", references: [id])
+  boards        Board[]
 }
 
 model VerificationToken {
@@ -92,4 +93,40 @@ model Post {
   authorId  String
 
   @@map("posts")
+}
+
+model Board {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  author      User          @relation(fields: [authorId], references: [id])
+  authorId    String
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("update_at")
+  columns     ColumnBoard[]
+
+  @@map("boards")
+}
+
+model ColumnBoard {
+  id        String       @id @default(cuid())
+  title     String
+  createdAt DateTime     @default(now()) @map("created_at")
+  updatedAt DateTime     @updatedAt @map("update_at")
+  items     ItemColumn[]
+  boardId   String
+  board     Board        @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  @@map("columns_board")
+}
+
+model ItemColumn {
+  id            String      @id @default(cuid())
+  description   String
+  columnBoardId String
+  columnBoard   ColumnBoard @relation(fields: [columnBoardId], references: [id], onDelete: Cascade)
+  updatedAt     DateTime    @updatedAt @map("update_at")
+  createdAt     DateTime    @default(now()) @map("created_at")
+
+  @@map("items_column")
 }

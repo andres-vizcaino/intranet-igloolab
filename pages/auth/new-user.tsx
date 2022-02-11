@@ -48,7 +48,10 @@ const NewUser: NextPage = () => {
           type="date"
           value={profileData.birthday}
           onChange={({ target }) =>
-            setProfileData({ ...profileData, birthday: target.value })
+            setProfileData({
+              ...profileData,
+              birthday: target.value,
+            })
           }
         />
         <button

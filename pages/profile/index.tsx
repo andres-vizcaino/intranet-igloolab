@@ -38,7 +38,8 @@ const Profile: NextPage = () => {
                 <p className="mt-5 font-semibold">{user.name}</p>
                 {daysLeft <= 10 && daysLeft > 0 && (
                   <p className="text-sm">
-                    🎂 en {daysLeft} día{daysLeft === 1 ? '' : 's'}
+                    🎂 en {daysLeft} día
+                    {daysLeft === 1 ? '' : 's'}
                   </p>
                 )}
 

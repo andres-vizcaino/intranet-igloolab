@@ -3,9 +3,7 @@
   "extends": [
     "next/core-web-vitals",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:prettier/recommended",
-    "prettier/prettier"
+    "prettier"
   ],
   "rules": {
     // I suggest you add those two rules:

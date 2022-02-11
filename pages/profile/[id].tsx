@@ -78,7 +78,10 @@ const ProfileId: NextPage = () => {
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
                     value={profileData.bio}
                     onChange={({ target }) =>
-                      setProfileData({ ...profileData, bio: target.value })
+                      setProfileData({
+                        ...profileData,
+                        bio: target.value,
+                      })
                     }
                     placeholder="Escribe aquí tu biografía"
                   />
