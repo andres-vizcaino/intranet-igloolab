@@ -18,7 +18,7 @@ const CreateBoard = ({ isOpen, closeModal }: Props) => {
     e.preventDefault()
 
     await createBoard(name, description, session?.user.id || '')
-    mutate('/api/todo')
+    mutate('/api/todo/board/' + session?.user.id)
     closeModal()
   }
 
