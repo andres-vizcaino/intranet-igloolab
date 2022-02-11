@@ -104,7 +104,7 @@ const TodoApp = ({ columnsBoard, boardId }: Props) => {
   }
 
   return (
-    <div className="overflow-x-scroll min-h-min">
+    <div className="overflow-x-scroll scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100 dark:scrollbar-track-gray-900 dark:scrollbar-thumb-gray-100 min-h-min">
       {isBrowser ? (
         <DragDropContext
           onDragEnd={(result) => onDragEnd(result, columns, setColumns)}

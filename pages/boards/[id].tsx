@@ -1,9 +1,11 @@
-import TodoApp from 'components/todo/TodoApp'
+
 import useBoard from 'hooks/useBoard'
 import { GetServerSideProps, NextPage } from 'next'
 import { getSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import prisma from 'lib/prisma'
+import { useEffect } from 'react'
+import TodoApp from 'components/todo/TodoApp'
 
 type Props = {
   isErrorServer: true
@@ -14,7 +16,11 @@ const BoardPage: NextPage<Props> = ({ isErrorServer }: Props) => {
 
   const { id } = router.query
 
-  const { board, isError, isLoading } = useBoard(id as string)
+  const { board, isError, isLoading, mutate } = useBoard(id as string)
+
+  useEffect(() => {
+    mutate()
+  }, [mutate])
 
   if (isErrorServer) {
     return (
