@@ -29,6 +29,15 @@ const Home: NextPage = () => {
               </a>
             </Link>
 
+            <Link href={'/pets'}>
+              <a
+                type="button"
+                className="mt-4 max-w-lg bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Ver mascotas 🐶
+              </a>
+            </Link>
+
             <Link href={'/blog'}>
               <a
                 type="button"

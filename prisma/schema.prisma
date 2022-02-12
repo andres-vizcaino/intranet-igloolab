@@ -52,6 +52,7 @@ model User {
   posts         Post[]
   tweetsLike    Tweet[]   @relation("likes", references: [id])
   boards        Board[]
+  Pet           Pet[]
 }
 
 model VerificationToken {
@@ -129,4 +130,14 @@ model ItemColumn {
   createdAt     DateTime    @default(now()) @map("created_at")
 
   @@map("items_column")
+}
+
+model Pet {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String
+  photo     String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("update_at")
 }
