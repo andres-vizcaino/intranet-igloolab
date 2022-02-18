@@ -6,6 +6,14 @@ import { SWRConfig } from 'swr'
 import Header from 'components/Header'
 import Footer from 'components/Footer'
 import { ThemeProvider } from 'next-themes'
+import Router from 'next/router'
+import NProgress from 'nprogress' //nprogress module
+import 'nprogress/nprogress.css' //styles of nprogress
+
+//Binding events.
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const fetcher = (url: string) => fetch(url).then((r) => r.json())
