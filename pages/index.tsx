@@ -7,10 +7,17 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import Chip from 'components/Chip'
 import { getArrayUsersMoreLikes } from 'utils/getArrayUsersMoreLikes'
+import { IUser } from 'models/User.model'
+import {
+  diffDaysToNow,
+  getDateToStringWithCurrentYear,
+} from 'utils/getDayandMonth'
+import { allConfetti } from 'utils/fireworks-conffeti'
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession()
   const { data, error } = useSWR<ITweet[]>('/api/tweet')
+  const { data: users } = useSWR<IUser[]>('/api/users')
 
   return (
     <div>
@@ -60,14 +67,24 @@ const Home: NextPage = () => {
             <div className="text-red-500 font-medium">
               Chismosea los ultimos estados
             </div>
-
-            <p className="text-xs mb-0 text-purple-700 font-bold">
-              Top 3 igloo-likes
-            </p>
             <div className="flex">
-              {getArrayUsersMoreLikes(data || []).map((user, index) => (
-                <Chip key={index} photo={user.photo} likes={user.likes} />
-              ))}
+              {users?.map((user) => {
+                const daysLeft = diffDaysToNow(
+                  getDateToStringWithCurrentYear(user.profile?.birthday || '')
+                )
+
+                if (daysLeft == 0) allConfetti()
+
+                if (daysLeft <= 10 && daysLeft >= 0)
+                  return (
+                    <Chip
+                      key={user.id}
+                      name={user.name || ''}
+                      date={daysLeft}
+                      photo={user.image}
+                    />
+                  )
+              })}
             </div>
 
             {error && <div>failed to load</div>}
