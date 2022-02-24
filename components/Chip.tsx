@@ -21,9 +21,7 @@ const Chip = ({ photo, name, date }: Props) => (
     </div>
     <div className="text-sm font-normal leading-none max-w-full flex-initial flex items-center gap-1">
       🎂 {name} {date === 0 && 'hoy! 🎇'}{' '}
-      {date != 0 &&
-        `en ${date} día
-      ${date === 1 ? '' : 's'}`}
+      {date != 0 && `en ${date} día${date === 1 ? '' : 's'}`}
     </div>
   </div>
 )
