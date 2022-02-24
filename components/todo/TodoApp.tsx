@@ -33,7 +33,6 @@ const TodoApp = ({ columnsBoard, boardId }: Props) => {
       const sourceColumn = columns.find(
         (column) => source.droppableId === column.id
       )
-      console.table(sourceColumn)
 
       const destColumn = columns.find(
         (column) => destination.droppableId === column.id

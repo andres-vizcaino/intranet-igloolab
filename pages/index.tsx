@@ -6,7 +6,6 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import useSWR from 'swr'
 import Chip from 'components/Chip'
-import { getArrayUsersMoreLikes } from 'utils/getArrayUsersMoreLikes'
 import { IUser } from 'models/User.model'
 import {
   diffDaysToNow,

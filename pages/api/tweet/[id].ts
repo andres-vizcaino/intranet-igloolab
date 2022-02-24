@@ -19,4 +19,31 @@ export default async function handler(
 
     res.status(200).json(response)
   }
+
+  if (req.method === 'GET') {
+    if (!isNaN(Number(id))) {
+      // FIXME: Este metodo esta retornando un arreglo con todos los tweets...
+      const response = await prisma.tweet.findUnique({
+        where: {
+          id: Number(id),
+        },
+        include: {
+          author: true,
+          likesBy: true,
+          Comment: {
+            include: {
+              author: true,
+            },
+            orderBy: {
+              createdAt: 'desc',
+            },
+          },
+        },
+      })
+
+      res.status(200).json(response)
+    } else {
+      res.status(200).json(null)
+    }
+  }
 }

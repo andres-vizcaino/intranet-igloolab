@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Transition, Dialog } from '@headlessui/react'
 import { IUser } from 'models/User.model'
 import { Fragment, useEffect, useState } from 'react'

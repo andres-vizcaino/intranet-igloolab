@@ -24,6 +24,11 @@ export default async function handler(
           name: true,
         },
       },
+      Comment: {
+        select: {
+          id: true,
+        },
+      },
     },
     orderBy: {
       createdAt: 'desc',

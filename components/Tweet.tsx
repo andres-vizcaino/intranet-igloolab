@@ -10,22 +10,36 @@ import { getLinkFromText, linkify } from 'utils/linkify'
 import { LinkPreview } from '@dhaiwat10/react-link-preview'
 import { getMetadataFromUrl } from 'utils/getMetadataFromUrl'
 import { getNamesFromArray } from 'utils/getNamesFromArray'
+import { useRouter } from 'next/router'
 
-const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
+const Tweet = ({
+  author,
+  userId,
+  body,
+  createdAt,
+  id,
+  likesBy,
+  Comment,
+}: ITweet) => {
+  const router = useRouter()
   const { data: session } = useSession()
   const { mutate } = useSWRConfig()
   const [isLiked, setIsLiked] = useState(false)
   const [likes, setLikes] = useState(0)
   const [nameLikes, setNameLikes] = useState('')
+  const [numberComments, setNumberComments] = useState(0)
 
   useEffect(() => {
+    if (Comment) {
+      setNumberComments(Comment.length)
+    }
     if (likesBy) {
       if (likesBy) setLikes(likesBy.length)
 
       setIsLiked(likesBy.some((user) => user.id === session?.user?.id))
       setNameLikes(getNamesFromArray(likesBy, session?.user?.id))
     }
-  }, [likesBy, session])
+  }, [likesBy, session, Comment])
 
   const handleClickDelete = async () => {
     await deleteTweet(id)
@@ -41,6 +55,11 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
       setLikes(likes - 1)
       await unlikeTweet(id, session?.user?.id)
     }
+  }
+
+  const goToTweet = () => {
+    if (router.pathname.includes('/tweet')) return
+    router.push(`/tweet/${id}`)
   }
 
   return (
@@ -101,27 +120,46 @@ const Tweet = ({ author, userId, body, createdAt, id, likesBy }: ITweet) => {
         />
       )}
 
-      <div className="mt-5 flex justify-between space-x-5 sm:hover:text-pink-700 pt-3 text-gray-500 border-t border-gray-300">
-        <div
-          className={`flex space-x-2 cursor-pointer ${
-            isLiked && 'text-pink-700'
-          }`}
-          onClick={handleClickLike}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-6 h-6"
+      <div className="mt-5 flex justify-between space-x-5  pt-3 text-gray-500 border-t border-gray-300">
+        <div className="flex gap-5">
+          <div
+            className={`flex space-x-2 cursor-pointer sm:hover:text-pink-700 ${
+              isLiked && 'text-pink-700'
+            }`}
+            onClick={handleClickLike}
           >
-            <path fill="none" d="M0 0h24v24H0V0z"></path>
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
-          </svg>
-          <span> {likes} igloo-Likes</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z"></path>
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+            </svg>
+            <span> {likes} igloo-Likes</span>
+          </div>
+          <div
+            onClick={goToTweet}
+            className="flex space-x-2 cursor-pointer sm:hover:text-cyan-700"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path fill="none" d="M0 0h24v24H0V0z"></path>
+              <path d="M20 4v13.17L18.83 16H4V4h16m0-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h14l4 4V4c0-1.1-.9-2-2-2zm-2 10H6v2h12v-2zm0-3H6v2h12V9zm0-3H6v2h12V6z"></path>
+            </svg>
+            <span> {numberComments} </span>
+          </div>
         </div>
-        <div>
-          <span className="text-xs">{nameLikes}</span>
-        </div>
+        {router.pathname.includes('/tweet') && (
+          <div>
+            <span className="text-xs">{nameLikes}</span>
+          </div>
+        )}
       </div>
     </div>
   )
