@@ -9,6 +9,7 @@ import { ThemeProvider } from 'next-themes'
 import Router from 'next/router'
 import NProgress from 'nprogress' //nprogress module
 import 'nprogress/nprogress.css' //styles of nprogress
+import MenuButtons from 'components/MenuButtons'
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
@@ -27,7 +28,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <ThemeProvider attribute="class">
           <div className="flex flex-col h-screen justify-between">
             <Header />
-            <main className="container mx-auto px-4 mb-auto">
+            <MenuButtons />
+            <main className="container mx-auto py-5 px-4 mb-auto">
               <Component {...pageProps} />
             </main>
             <Footer />

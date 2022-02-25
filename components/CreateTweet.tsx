@@ -1,10 +1,12 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react'
 import { createTweet } from 'services/tweet.services'
 import { useSWRConfig } from 'swr'
 
 const CreateTweet = () => {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [status, setStatus] = useState('')
   const [count, setCount] = useState(0)
@@ -16,7 +18,10 @@ const CreateTweet = () => {
   }, [status])
 
   const closeModal = () => setIsOpen(false)
-  const openModal = () => setIsOpen(true)
+  const openModal = () => {
+    router.push('/')
+    setIsOpen(true)
+  }
 
   const handleOnChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) =>
     setStatus(target.value)
