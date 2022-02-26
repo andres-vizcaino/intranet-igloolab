@@ -19,4 +19,40 @@ export default async function handler(
 
     res.status(200).json(response)
   }
+
+  if (req.method === 'POST') {
+    const { userId } = req.body
+    const response = await prisma.pet.update({
+      where: {
+        id: String(id),
+      },
+      data: {
+        likesBy: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    })
+
+    res.status(200).json(response)
+  }
+
+  if (req.method === 'PUT') {
+    const { userId } = req.body
+    const response = await prisma.pet.update({
+      where: {
+        id: String(id),
+      },
+      data: {
+        likesBy: {
+          disconnect: {
+            id: userId,
+          },
+        },
+      },
+    })
+
+    res.status(200).json(response)
+  }
 }

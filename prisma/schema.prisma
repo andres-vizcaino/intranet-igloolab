@@ -56,6 +56,7 @@ model User {
   CongratCreate Congrat[] @relation("congratCreate")
   CongratRecive Congrat[] @relation("congratReceive")
   Comment       Comment[]
+  petsLike      Pet[]     @relation("likesPet", references: [id])
 }
 
 model VerificationToken {
@@ -155,6 +156,7 @@ model Pet {
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("update_at")
+  likesBy   User[]   @relation(name: "likesPet", references: [id])
 }
 
 model Congrat {

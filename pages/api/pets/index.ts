@@ -11,10 +11,18 @@ export default async function handler(
   const pets = await prisma.pet.findMany({
     include: {
       owner: true,
+      likesBy: true,
     },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    orderBy: [
+      {
+        likesBy: {
+          _count: 'desc',
+        },
+      },
+      {
+        createdAt: 'desc',
+      },
+    ],
   })
 
   res.status(200).json(pets)

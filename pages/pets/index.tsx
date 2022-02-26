@@ -46,7 +46,10 @@ const PetsPage: NextPage = () => {
 
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
         {pets.map((pet, index) => (
-          <div key={pet.id}>
+          <div
+            key={pet.id}
+            className={`${index === 0 && 'sm:row-span-2	sm:col-span-2'}`}
+          >
             <Image
               src={getUrlCloudnaryLowQuality(pet.photo)}
               alt={pet.name}
@@ -67,7 +70,11 @@ const PetsPage: NextPage = () => {
               loading="lazy"
             />
             <div className="flex gap-1 justify-center items-baseline">
-              <p className="text-xl font-bold">{pet.name}</p>
+              <p
+                className={`${index === 0 ? 'text-3xl' : 'text-xl'} font-bold`}
+              >
+                {pet.name}
+              </p>
               {session.user.id === pet.owner.id && (
                 <button onClick={() => deletePetSelect(pet.id)}>❌</button>
               )}
@@ -82,7 +89,9 @@ const PetsPage: NextPage = () => {
                 className="rounded-full"
               />
               <Link href={`/profile/${pet.owner.id}`}>
-                <a className="text-sm">{pet.owner.name}</a>
+                <a className={`${index === 0 ? 'text-base' : 'text-sm'}`}>
+                  {pet.owner.name}
+                </a>
               </Link>
             </div>
           </div>
@@ -95,6 +104,8 @@ const PetsPage: NextPage = () => {
         image={petSelected?.photo || ''}
         owner={petSelected?.owner}
         name={petSelected?.name || ''}
+        likesBy={petSelected?.likesBy || []}
+        idPet={petSelected?.id || ''}
       />
       <CreatePetModal isOpen={isOpen} closeModal={closeModal} />
     </div>

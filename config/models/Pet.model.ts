@@ -7,4 +7,5 @@ export interface IPet {
   ownerId: string
   owner: IUser
   createdAt: string
+  likesBy: IUser[]
 }
