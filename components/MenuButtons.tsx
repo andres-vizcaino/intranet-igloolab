@@ -45,6 +45,15 @@ const MenuButtons = () => {
           Ir tus tableros 📋
         </a>
       </Link>
+
+      <Link href={'/congrats'}>
+        <a
+          type="button"
+          className="mt-4 max-w-lg bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Muro de ⭐️
+        </a>
+      </Link>
     </div>
   )
 }

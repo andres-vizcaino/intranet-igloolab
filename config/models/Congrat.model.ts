@@ -8,5 +8,5 @@ export interface ICongrat {
   author: IUser
   from: IUser
   isAnonymous: boolean
-  createdAt: string
+  createdAt: number
 }
