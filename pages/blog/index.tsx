@@ -2,6 +2,7 @@ import { IPost } from 'models/Post.model'
 import { NextPage } from 'next'
 import Link from 'next/link'
 import useSWR from 'swr'
+import { markdownToHtml } from 'utils/markdownToHtml'
 
 const Blog: NextPage = () => {
   const { data, error } = useSWR<IPost[]>('/api/posts')
@@ -21,11 +22,18 @@ const Blog: NextPage = () => {
       </div>
       {error && <div>failed to load</div>}
       {!data && <div>Cargando todos los Articulos creativos...</div>}
-      <div className="flex flex-wrap gap-10 items-center justify-center mt-10">
+      <div className="flex flex-wrap justify-center gap-10 mt-10">
         {data?.map((post) => (
           <Link key={post.id} href={`/blog/${post.slug}`}>
-            <a className="p-10 hover:border-dotted border-8 border-violet-500 rounded-xl">
-              <p className="text-3xl">{post.title}</p>
+            <a className="max-w-md p-10 hover:border-dotted border-8 border-violet-500 rounded-xl">
+              <p className="text-3xl font-bold">{post.title}</p>
+              <p
+                className="text-sm mt-3"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    markdownToHtml(post.content).substring(0, 250) + '...',
+                }}
+              />
               <p className="font-medium mt-5">
                 Escrito por: {post.author.name}
               </p>

@@ -89,7 +89,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   })
 
-  const content = await markdownToHtml(post?.content || '')
+  const content = markdownToHtml(post?.content || '')
 
   return {
     props: {

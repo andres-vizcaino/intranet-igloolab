@@ -40,9 +40,9 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
@@ -50,13 +50,14 @@ model User {
   profile       Profile?
   tweets        Tweet[]
   posts         Post[]
-  tweetsLike    Tweet[]   @relation("likes", references: [id])
+  tweetsLike    Tweet[]        @relation("likes", references: [id])
   boards        Board[]
   Pet           Pet[]
-  CongratCreate Congrat[] @relation("congratCreate")
-  CongratRecive Congrat[] @relation("congratReceive")
+  CongratCreate Congrat[]      @relation("congratCreate")
+  CongratRecive Congrat[]      @relation("congratReceive")
   Comment       Comment[]
-  petsLike      Pet[]     @relation("likesPet", references: [id])
+  petsLike      Pet[]          @relation("likesPet", references: [id])
+  postCreative  PostCreative[]
 }
 
 model VerificationToken {
@@ -176,4 +177,25 @@ enum TypeCongrat {
   CRACK
   GOOD_JOB
   SIUU
+}
+
+model PostCreative {
+  id         String    @id @default(cuid())
+  title      String
+  content    String
+  image      String
+  author     User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId   String
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("update_at")
+  Category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+}
+
+model Category {
+  id        String         @id @default(cuid())
+  name      String
+  createdAt DateTime       @default(now()) @map("created_at")
+  updatedAt DateTime       @updatedAt @map("update_at")
+  posts     PostCreative[]
 }
