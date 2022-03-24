@@ -3,14 +3,15 @@ import { useState } from 'react'
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
 import 'react-markdown-editor-lite/lib/index.css'
-import { createPost } from 'services/post.services'
 import { useSession } from 'next-auth/react'
-import { slugify } from 'utils/slugify'
 import { useRouter } from 'next/router'
 import useFileUpload from 'hooks/utils/useFileUpload'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import SearchCategory from 'components/SearchCategory'
+import { uploadFileReturnName } from 'services/uploadFile.services'
+import { createCreative } from 'services/creative.services'
+import ModalLoanding from 'components/modalLoanding'
 
 type TEditorParams = {
   text: string
@@ -18,11 +19,12 @@ type TEditorParams = {
 
 const CreatePostCreative: NextPage = () => {
   const mdParser = new MarkdownIt(/* Markdown-it options */)
-  const [published, setPublished] = useState(true)
   const [title, setTitle] = useState('')
   const { data: session } = useSession()
+  const [categoryId, setCategoryId] = useState('')
   const router = useRouter()
   const { image, preview, setImage } = useFileUpload()
+  const [isLoading, setIsLoading] = useState(false)
 
   const [content, setcontent] = useState(
     `**Puedes empezar a crear el mejor articulo, edita el texto a tu izquierda!!** 
@@ -46,14 +48,21 @@ const CreatePostCreative: NextPage = () => {
   const handleEditorChange = ({ text }: TEditorParams) => setcontent(text)
 
   const handleSubmit = async () => {
-    await createPost({
-      title,
-      content,
-      published,
-      authorId: session?.user.id || '',
-      slug: slugify(title),
-    })
-    router.push('/blog')
+    if (image) {
+      setIsLoading(true)
+      const photo: string = await uploadFileReturnName(image)
+      await createCreative(
+        title,
+        content,
+        categoryId,
+        session?.user?.id || '',
+        photo
+      )
+      setIsLoading(false)
+
+      router.push('/creative')
+      // mutate('/api/creative')
+    }
   }
 
   return (
@@ -122,15 +131,18 @@ const CreatePostCreative: NextPage = () => {
 
       <div className="my-5">
         <p>Categoria:</p>
-        <SearchCategory />
+        <SearchCategory categoryId={categoryId} setCategoryId={setCategoryId} />
       </div>
 
       <button
-        className="mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="disabled:bg-slate-500 mt-4 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         onClick={handleSubmit}
+        disabled={!title || !categoryId || !content || !image}
       >
         Crear post Creativo 🥳
       </button>
+
+      <ModalLoanding isOpen={isLoading} />
     </div>
   )
 }

@@ -11,6 +11,7 @@ export default async function handler(
   const PostCreatives = await prisma.postCreative.findMany({
     include: {
       author: true,
+      Category: true,
     },
     orderBy: {
       createdAt: 'desc',

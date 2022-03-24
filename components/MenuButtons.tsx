@@ -46,6 +46,15 @@ const MenuButtons = () => {
         </a>
       </Link>
 
+      <Link href={'/creative'}>
+        <a
+          type="button"
+          className="mt-4 max-w-lg bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Muro creativo
+        </a>
+      </Link>
+
       <Link href={'/congrats'}>
         <a
           type="button"

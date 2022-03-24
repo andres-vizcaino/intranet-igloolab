@@ -17,6 +17,7 @@ export default async function handler(
       },
       include: {
         author: true,
+        Category: true,
       },
     })
 
