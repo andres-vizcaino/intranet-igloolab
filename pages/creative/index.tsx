@@ -35,7 +35,9 @@ const WallCreative = () => {
             categorySelect === '' ? 'bg-red-600 text-white ' : 'bg-transparent'
           }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
         >
-          <h3 className="text-lg">Todo</h3>
+          <h3 className="text-lg">
+            <span className="text-sm">({data?.length})</span> Todo
+          </h3>
         </div>
         {categories?.map((category) => (
           <div
@@ -47,7 +49,12 @@ const WallCreative = () => {
             }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
             key={category.id}
           >
-            <h3 className="text-lg">{category.name}</h3>
+            <h3 className="text-lg">
+              <span className="text-sm">
+                ({data?.filter((e) => e.Category.id === category.id).length}){' '}
+              </span>
+              {category.name}
+            </h3>
           </div>
         ))}
       </div>
