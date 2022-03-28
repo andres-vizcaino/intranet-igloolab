@@ -6,6 +6,7 @@ import Image from 'next/image'
 import useCreative from 'hooks/useCreative'
 import Link from 'next/link'
 import { markdownToHtml } from 'utils/markdownToHtml'
+import { getUrlCloudnaryLowQuality } from 'utils/getUrlCloudnaryLowQuality'
 
 const CreativeId = () => {
   const router = useRouter()
@@ -76,6 +77,13 @@ const CreativeId = () => {
       </div>
 
       <div className="prose max-w-none lg:prose-base prose-sm dark:prose-invert prose-red mt-16">
+        <div className="max-w-full flex flex-col items-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={getUrlCloudnaryLowQuality(creative?.image || '')}
+            alt={creative?.title}
+          />
+        </div>
         <div dangerouslySetInnerHTML={{ __html: content || '' }}></div>
       </div>
     </div>
