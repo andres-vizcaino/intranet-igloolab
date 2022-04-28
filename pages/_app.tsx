@@ -10,6 +10,7 @@ import Router from 'next/router'
 import NProgress from 'nprogress' //nprogress module
 import 'nprogress/nprogress.css' //styles of nprogress
 import MenuButtons from 'components/MenuButtons'
+import HomeLayout from 'components/HomeLayout'
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
@@ -26,14 +27,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <title>Intranet - igloolab</title>
         </Head>
         <ThemeProvider attribute="class">
-          <div className="flex flex-col h-screen justify-between">
-            <Header />
-            <MenuButtons />
-            <main className="container mx-auto py-5 px-4 mb-auto">
-              <Component {...pageProps} />
-            </main>
-            <Footer />
-          </div>
+          <HomeLayout>
+            <Component {...pageProps} />
+          </HomeLayout>
         </ThemeProvider>
       </SWRConfig>
     </SessionProvider>
