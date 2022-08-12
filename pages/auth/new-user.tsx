@@ -1,10 +1,11 @@
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
+import { NextApplicationPage } from 'pages/_app'
 import { FormEvent, useState } from 'react'
 import { createProfile } from 'services/profile.services'
 
-const NewUser: NextPage = () => {
+const NewUser: NextApplicationPage = () => {
   const [profileData, setProfileData] = useState({
     bio: '',
     birthday: '',
@@ -65,5 +66,7 @@ const NewUser: NextPage = () => {
     </div>
   )
 }
+
+NewUser.requireAuth = true
 
 export default NewUser

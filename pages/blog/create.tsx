@@ -8,12 +8,13 @@ import { createPost } from 'services/post.services'
 import { useSession } from 'next-auth/react'
 import { slugify } from 'utils/slugify'
 import { useRouter } from 'next/router'
+import { NextApplicationPage } from 'pages/_app'
 
 type TEditorParams = {
   text: string
 }
 
-const CreateBlog: NextPage = () => {
+const CreateBlog: NextApplicationPage = () => {
   const mdParser = new MarkdownIt(/* Markdown-it options */)
   const [published, setPublished] = useState(true)
   const [title, setTitle] = useState('')
@@ -65,14 +66,12 @@ const CreateBlog: NextPage = () => {
           <Switch
             checked={published}
             onChange={setPublished}
-            className={`${
-              published ? 'bg-blue-600' : 'bg-gray-200'
-            } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+            className={`${published ? 'bg-blue-600' : 'bg-gray-200'
+              } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
             <span
-              className={`${
-                published ? 'translate-x-6' : 'translate-x-1'
-              } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+              className={`${published ? 'translate-x-6' : 'translate-x-1'
+                } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
             />
           </Switch>
         </div>
@@ -87,5 +86,7 @@ const CreateBlog: NextPage = () => {
     </div>
   )
 }
+
+CreateBlog.requireAuth = true
 
 export default CreateBlog

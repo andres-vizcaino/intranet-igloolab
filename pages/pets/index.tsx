@@ -9,8 +9,9 @@ import Link from 'next/link'
 import { signIn, useSession } from 'next-auth/react'
 import { deletePet } from 'services/pet.services'
 import LigthBoxImage from 'components/LigthBoxImage'
+import { NextApplicationPage } from 'pages/_app'
 
-const PetsPage: NextPage = () => {
+const PetsPage: NextApplicationPage = () => {
   const { data: session, status } = useSession()
   const handleClick = () => signIn('google')
   const [isOpen, setIsOpen] = useState(false)
@@ -99,11 +100,10 @@ const PetsPage: NextPage = () => {
               }}
               height="100%"
               layout="responsive"
-              className={`scale-75 ${
-                index % 2 === 0
+              className={`scale-75 ${index % 2 === 0
                   ? 'translate-x-4 skew-y-3'
                   : 'translate-x-4 -skew-y-3'
-              }  transform-gpu hover:scale-110`}
+                }  transform-gpu hover:scale-110`}
               objectFit="cover"
               unoptimized
               loading="lazy"
@@ -150,5 +150,7 @@ const PetsPage: NextPage = () => {
     </div>
   )
 }
+
+PetsPage.requireAuth = true
 
 export default PetsPage

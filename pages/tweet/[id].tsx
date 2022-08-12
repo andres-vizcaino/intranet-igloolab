@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react'
 import Comment from 'components/Comment'
 import CreateComment from 'components/CreateComment'
 import { IComment } from 'models/Comment.model'
+import { NextApplicationPage } from 'pages/_app'
 
-const TweetId = () => {
+const TweetId: NextApplicationPage = () => {
   const router = useRouter()
   const { data: session, status } = useSession()
   const [tweetId, setTweetId] = useState('')
@@ -56,5 +57,7 @@ const TweetId = () => {
     </div>
   )
 }
+
+TweetId.requireAuth = true
 
 export default TweetId

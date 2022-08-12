@@ -5,12 +5,13 @@ import { useRouter } from 'next/router'
 import prisma from 'lib/prisma'
 import { useEffect } from 'react'
 import TodoApp from 'components/todo/TodoApp'
+import { NextApplicationPage } from 'pages/_app'
 
 type Props = {
   isErrorServer: true
 }
 
-const BoardPage: NextPage<Props> = ({ isErrorServer }: Props) => {
+const BoardPage: NextApplicationPage<Props> = ({ isErrorServer }: Props) => {
   const router = useRouter()
 
   const { id } = router.query
@@ -77,5 +78,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     props: {},
   }
 }
+
+BoardPage.requireAuth = true
 
 export default BoardPage

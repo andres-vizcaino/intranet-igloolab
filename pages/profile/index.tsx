@@ -1,5 +1,4 @@
 import { IUser } from 'models/User.model'
-import { NextPage } from 'next'
 import Link from 'next/link'
 import useSWR from 'swr'
 import Image from 'next/image'
@@ -8,8 +7,9 @@ import {
   getDateToStringWithCurrentYear,
 } from 'utils/getDayandMonth'
 import { allConfetti } from 'utils/fireworks-conffeti'
+import { NextApplicationPage } from 'pages/_app'
 
-const Profile: NextPage = () => {
+const Profile: NextApplicationPage = () => {
   const { data, error } = useSWR<IUser[]>('/api/users')
 
   if (error) return <div>failed to load</div>
@@ -52,5 +52,7 @@ const Profile: NextPage = () => {
     </div>
   )
 }
+
+Profile.requireAuth = true
 
 export default Profile

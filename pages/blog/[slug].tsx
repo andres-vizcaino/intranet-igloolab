@@ -8,8 +8,9 @@ import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { deletePost } from 'services/post.services'
 import { markdownToHtml } from 'utils/markdownToHtml'
+import { NextApplicationPage } from 'pages/_app'
 
-const PostSlug = ({
+const PostSlug: NextApplicationPage = ({
   postServer: { title, author, content },
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
@@ -100,5 +101,7 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     },
   }
 }
+
+PostSlug.requireAuth = true
 
 export default PostSlug

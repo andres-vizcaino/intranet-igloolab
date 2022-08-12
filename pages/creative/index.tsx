@@ -2,10 +2,11 @@ import { Category } from '@prisma/client'
 import CardCreative from 'components/CardCreative'
 import { ICreative } from 'models/Creative.model'
 import Link from 'next/link'
+import { NextApplicationPage } from 'pages/_app'
 import { useState } from 'react'
 import useSWR from 'swr'
 
-const WallCreative = () => {
+const WallCreative: NextApplicationPage = () => {
   const { data } = useSWR<ICreative[]>('/api/creative')
   const { data: categories } = useSWR<Category[]>('/api/category')
   const [categorySelect, setCategorySelect] = useState<string>('')
@@ -31,9 +32,8 @@ const WallCreative = () => {
       <div className="mt-10 mb-5 flex w-full flex-wrap gap-5">
         <div
           onClick={() => handleChangeCategory('')}
-          className={`${
-            categorySelect === '' ? 'bg-red-600 text-white ' : 'bg-transparent'
-          }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
+          className={`${categorySelect === '' ? 'bg-red-600 text-white ' : 'bg-transparent'
+            }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
         >
           <h3 className="text-lg">
             <span className="text-sm">({data?.length})</span> Todo
@@ -42,11 +42,10 @@ const WallCreative = () => {
         {categories?.map((category) => (
           <div
             onClick={() => handleChangeCategory(category.id)}
-            className={`${
-              categorySelect === category.id
-                ? 'bg-red-600 text-white '
-                : 'bg-transparent'
-            }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
+            className={`${categorySelect === category.id
+              ? 'bg-red-600 text-white '
+              : 'bg-transparent'
+              }  cursor-pointer rounded-full border-2 px-5 hover:bg-red-300 hover:text-white transition`}
             key={category.id}
           >
             <h3 className="text-lg">
@@ -76,5 +75,7 @@ const WallCreative = () => {
     </>
   )
 }
+
+WallCreative.requireAuth = true
 
 export default WallCreative

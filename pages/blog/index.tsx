@@ -1,10 +1,11 @@
 import { IPost } from 'models/Post.model'
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { NextApplicationPage } from 'pages/_app'
 import useSWR from 'swr'
 import { markdownToHtml } from 'utils/markdownToHtml'
 
-const Blog: NextPage = () => {
+const Blog: NextApplicationPage = () => {
   const { data, error } = useSWR<IPost[]>('/api/posts')
 
   return (
@@ -47,5 +48,7 @@ const Blog: NextPage = () => {
     </div>
   )
 }
+
+Blog.requireAuth = true
 
 export default Blog

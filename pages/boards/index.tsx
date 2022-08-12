@@ -7,8 +7,9 @@ import { deleteBoard } from 'services/todo.services'
 import useSWR from 'swr'
 import Image from 'next/image'
 import { signIn, useSession } from 'next-auth/react'
+import { NextApplicationPage } from 'pages/_app'
 
-const BoardsPage: NextPage = () => {
+const BoardsPage: NextApplicationPage = () => {
   const { data: session, status } = useSession()
   const handleClick = () => signIn('google')
   const { data, error, mutate } = useSWR<Board[]>(
@@ -111,5 +112,7 @@ const BoardsPage: NextPage = () => {
     </>
   )
 }
+
+BoardsPage.requireAuth = true
 
 export default BoardsPage

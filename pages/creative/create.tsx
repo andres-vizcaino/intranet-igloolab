@@ -12,12 +12,13 @@ import SearchCategory from 'components/SearchCategory'
 import { uploadFileReturnName } from 'services/uploadFile.services'
 import { createCreative } from 'services/creative.services'
 import ModalLoanding from 'components/modalLoanding'
+import { NextApplicationPage } from 'pages/_app'
 
 type TEditorParams = {
   text: string
 }
 
-const CreatePostCreative: NextPage = () => {
+const CreatePostCreative: NextApplicationPage = () => {
   const mdParser = new MarkdownIt(/* Markdown-it options */)
   const [title, setTitle] = useState('')
   const { data: session } = useSession()
@@ -146,5 +147,7 @@ const CreatePostCreative: NextPage = () => {
     </div>
   )
 }
+
+CreatePostCreative.requireAuth = true
 
 export default CreatePostCreative

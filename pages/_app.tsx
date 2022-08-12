@@ -9,16 +9,27 @@ import { ThemeProvider } from 'next-themes'
 import Router from 'next/router'
 import NProgress from 'nprogress' //nprogress module
 import 'nprogress/nprogress.css' //styles of nprogress
-import MenuButtons from 'components/MenuButtons'
 import HomeLayout from 'components/HomeLayout'
+import AuthGuard from 'components/AuthGuard'
+import { NextPage } from "next"
+
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
 Router.events.on('routeChangeComplete', () => NProgress.done())
 Router.events.on('routeChangeError', () => NProgress.done())
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+export type NextApplicationPage<P = any, IP = P> = NextPage<P, IP> & {
+  requireAuth?: boolean
+}
+
+function MyApp(props: AppProps) {
   const fetcher = (url: string) => fetch(url).then((r) => r.json())
+
+  const {
+    Component,
+    pageProps: { session, ...pageProps },
+  }: { Component: NextApplicationPage; pageProps: any } = props
 
   return (
     <SessionProvider session={session}>
@@ -27,9 +38,16 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           <title>Intranet - igloolab</title>
         </Head>
         <ThemeProvider attribute="class">
-          <HomeLayout>
+          {Component.requireAuth ? (
+            <AuthGuard>
+              <HomeLayout>
+                <Component {...pageProps} />
+              </HomeLayout>
+            </AuthGuard>
+          ) : (
             <Component {...pageProps} />
-          </HomeLayout>
+          )}
+
         </ThemeProvider>
       </SWRConfig>
     </SessionProvider>

@@ -5,13 +5,14 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { NextApplicationPage } from 'pages/_app'
 import { useEffect, useState } from 'react'
 import { updateProfile } from 'services/profile.services'
 import { getDayandMonthName } from 'utils/getDayandMonth'
 import { getStringToDate } from 'utils/getStringToDate'
 import { getTimeAgo } from 'utils/getTimeAgo'
 
-const ProfileId: NextPage = () => {
+const ProfileId: NextApplicationPage = () => {
   const router = useRouter()
   const { id } = router.query
   const [ownProfile, setownProfile] = useState(false)
@@ -167,5 +168,7 @@ const ProfileId: NextPage = () => {
     </>
   )
 }
+
+ProfileId.requireAuth = true
 
 export default ProfileId

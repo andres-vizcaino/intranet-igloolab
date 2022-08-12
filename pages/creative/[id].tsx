@@ -7,8 +7,9 @@ import useCreative from 'hooks/useCreative'
 import Link from 'next/link'
 import { markdownToHtml } from 'utils/markdownToHtml'
 import { getUrlCloudnaryLowQuality } from 'utils/getUrlCloudnaryLowQuality'
+import { NextApplicationPage } from 'pages/_app'
 
-const CreativeId = () => {
+const CreativeId: NextApplicationPage = () => {
   const router = useRouter()
   const { id } = router.query
   const { isLoading, creative } = useCreative(id as string)
@@ -89,5 +90,7 @@ const CreativeId = () => {
     </div>
   )
 }
+
+CreativeId.requireAuth = true
 
 export default CreativeId

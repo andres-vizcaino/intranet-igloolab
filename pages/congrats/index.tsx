@@ -2,10 +2,11 @@ import CardCongrats from 'components/CardCongrats'
 import CreateCongrats from 'components/CreateCongrats'
 import { ICongrat } from 'models/Congrat.model'
 import { signIn, useSession } from 'next-auth/react'
+import { NextApplicationPage } from 'pages/_app'
 import { useState } from 'react'
 import useSWR from 'swr'
 
-const CongrastPage = () => {
+const CongrastPage: NextApplicationPage = () => {
   const { data, error } = useSWR<ICongrat[]>('/api/congrat')
   const [isOpen, setIsOpen] = useState(false)
   const handleClick = () => signIn('google')
@@ -83,5 +84,7 @@ const CongrastPage = () => {
     </div>
   )
 }
+
+CongrastPage.requireAuth = true
 
 export default CongrastPage
