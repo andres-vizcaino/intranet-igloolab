@@ -50,13 +50,13 @@ model User {
   profile       Profile?
   tweets        Tweet[]
   posts         Post[]
-  tweetsLike    Tweet[]        @relation("likes", references: [id])
+  tweetsLike    Tweet[]        @relation("likes")
   boards        Board[]
   Pet           Pet[]
   CongratCreate Congrat[]      @relation("congratCreate")
   CongratRecive Congrat[]      @relation("congratReceive")
   Comment       Comment[]
-  petsLike      Pet[]          @relation("likesPet", references: [id])
+  petsLike      Pet[]          @relation("likesPet")
   postCreative  PostCreative[]
 }
 
@@ -83,7 +83,7 @@ model Tweet {
   updatedAt DateTime  @default(now()) @map("updated_at")
   author    User      @relation(fields: [userId], references: [id])
   userId    String
-  likesBy   User[]    @relation(name: "likes", references: [id])
+  likesBy   User[]    @relation("likes")
   Comment   Comment[]
 
   @@map("tweets")
@@ -157,7 +157,7 @@ model Pet {
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("update_at")
-  likesBy   User[]   @relation(name: "likesPet", references: [id])
+  likesBy   User[]   @relation("likesPet")
 }
 
 model Congrat {

@@ -1,6 +1,5 @@
 import { Board } from '@prisma/client'
 import CreateBoard from 'components/CreateBoard'
-import { NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
 import { deleteBoard } from 'services/todo.services'

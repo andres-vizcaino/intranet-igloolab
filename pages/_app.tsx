@@ -3,8 +3,6 @@ import '../styles/index.css'
 import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
 import { SWRConfig } from 'swr'
-import Header from 'components/Header'
-import Footer from 'components/Footer'
 import { ThemeProvider } from 'next-themes'
 import Router from 'next/router'
 import NProgress from 'nprogress' //nprogress module
