@@ -3,4 +3,5 @@ export interface IProfile {
   bio: string
   birthday: string
   userId: string
+  amoramistad: boolean
 }

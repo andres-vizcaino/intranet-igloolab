@@ -22,4 +22,18 @@ export default async function handler(
 
     res.status(200).json(response)
   }
+
+  if (req.method === 'POST') {
+    const { amoramistad, idUser } = req.body
+    const response = await prisma.profile.update({
+      where: {
+        userId: idUser,
+      },
+      data: {
+        amoramistad
+      },
+    })
+
+    res.status(200).json(response)
+  }
 }

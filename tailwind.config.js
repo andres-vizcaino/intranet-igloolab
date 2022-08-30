@@ -12,6 +12,9 @@ module.exports = {
       fontFamily: {
         sans: ['Poppins', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        igloolab: '#ff003c',
+      },
     },
   },
   plugins: [require(`@tailwindcss/typography`), require('tailwind-scrollbar')],

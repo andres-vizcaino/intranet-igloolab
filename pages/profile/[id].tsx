@@ -1,6 +1,5 @@
 import Tweet from 'components/Tweet'
 import useUser from 'hooks/useUser'
-import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
