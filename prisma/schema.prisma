@@ -200,3 +200,9 @@ model Category {
   updatedAt DateTime       @updatedAt @map("update_at")
   posts     PostCreative[]
 }
+
+model AmorAmistad {
+  id       String @id @default(cuid())
+  friendId String
+  loveId   String
+}
