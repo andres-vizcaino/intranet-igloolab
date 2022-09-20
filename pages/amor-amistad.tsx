@@ -11,7 +11,7 @@ const AmorAmistadPage: NextApplicationPage = () => {
     const { data } = useSession()
     const { isLoading, user } = useUser(data ? data?.user.id : '0')
     const { data: love } = useSWR(`/api/amoramistad/${data ? data?.user.id : '0'}`)
-    const { data: me, mutate } = useSWR(`/api/amoramistad/${data ? data?.user.id : '0'}`)
+    const { data: me, mutate } = useSWR(`/api/amoramistad/me/${data ? data?.user.id : '0'}`)
 
 
     const isParticipant = user?.profile?.amoramistad
