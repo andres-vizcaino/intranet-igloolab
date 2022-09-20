@@ -205,4 +205,5 @@ model AmorAmistad {
   id       String @id @default(cuid())
   friendId String
   loveId   String
+  message  String @default("")
 }
