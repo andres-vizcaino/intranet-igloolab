@@ -51,7 +51,7 @@ const AmorAmistadPage: NextApplicationPage = () => {
             <h2 className='mt-4 text-2xl font-bold'>{love.user.name}</h2>
         </div>
 
-        {me.message !== "" ? <p className='mt-5'>Tu amigo secreo ya conoce tus gustos!!</p> : <><p className='mt-5'>Tu amigo secreto seguramente no sabe que regalarte... ¡¿Por qué no le dejas un mensajito para darle ideas de tus gustos y disgustos?!... pero no reveles tu identidad.</p>
+        {me.message !== "" || me.message.length > 10 ? <p className='mt-5'>Tu amigo secreo ya conoce tus gustos!!</p> : <><p className='mt-5'>Tu amigo secreto seguramente no sabe que regalarte... ¡¿Por qué no le dejas un mensajito para darle ideas de tus gustos y disgustos?!... pero no reveles tu identidad.</p>
             <form onSubmit={handlerSubmit} className="mt-3">
                 <textarea className="mt-5 shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:text-white dark:bg-gray-800"
                     placeholder="Escribe aqui tu estado" name="message" id="" cols={30} rows={10}></textarea>
