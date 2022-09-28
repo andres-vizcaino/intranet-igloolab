@@ -38,7 +38,7 @@ const LaMejorMandala: NextApplicationPage = () => {
                 Mandalas <span className="text-red-500">igloolab</span> - Semana de la salud
             </h1>
             <h3 className="text-xl">Sube una foto de tu mandala 📸</h3>
-            <h4 className="text-md">Habrá premios para los 3 mas votados</h4>
+            <h4 className="text-md">Habrá premios para los 2 mas votados</h4>
             {!haveMandalaPublish && <button
                 onClick={closeModal}
                 className="bg-blue-500 hover:bg-blue-700 text-white mt-5 font-bold py-2 px-4 rounded"
