@@ -58,6 +58,8 @@ model User {
   Comment       Comment[]
   petsLike      Pet[]          @relation("likesPet")
   postCreative  PostCreative[]
+  Mandala       Mandala?
+  MandalaLikes  Mandala[]      @relation("likesMandala")
 }
 
 model VerificationToken {
@@ -159,6 +161,17 @@ model Pet {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("update_at")
   likesBy   User[]   @relation("likesPet")
+}
+
+model Mandala {
+  id        String   @id @default(cuid())
+  name      String
+  ownerId   String   @unique
+  photo     String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+  likesBy   User[]   @relation("likesMandala")
 }
 
 model Congrat {

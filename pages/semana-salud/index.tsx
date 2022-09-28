@@ -1,5 +1,4 @@
-import Image from 'next/image'
-
+/* eslint-disable @next/next/no-img-element */
 const SemanaSalud = () => <main className="grid min-h-screen place-content-center">
     <h1 className="text-3xl font-bold mb-10">Bienvenido a la semana de la salud</h1>
     <img src="/img/semana-cronograma.png" alt="Calendario semana de la salud" />
@@ -14,7 +13,6 @@ const SemanaSalud = () => <main className="grid min-h-screen place-content-cente
     `
 
     }
-
     </style>
 </main>
 
