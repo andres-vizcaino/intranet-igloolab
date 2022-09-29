@@ -13,10 +13,7 @@ const AmorAmistadPage: NextApplicationPage = () => {
     const { data: love } = useSWR(`/api/amoramistad/${data ? data?.user.id : '0'}`)
     const { data: me, mutate } = useSWR(`/api/amoramistad/me/${data ? data?.user.id : '0'}`)
 
-
     const isParticipant = user?.profile?.amoramistad
-
-
 
     if (isLoading) return <>Estamos cargando...</>
     if (!isParticipant) return <>Hola, ya no hay mas oportunidades para participar, regresa el otro año.</>

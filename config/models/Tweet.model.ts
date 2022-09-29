@@ -7,6 +7,7 @@ export interface ITweet {
   createdAt: number
   userId: string
   author: User
+  image?: string | null
   likesBy: User[]
   Comment: IComment[]
 }

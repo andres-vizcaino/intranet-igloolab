@@ -11,6 +11,7 @@ import { LinkPreview } from '@dhaiwat10/react-link-preview'
 import { getMetadataFromUrl } from 'utils/getMetadataFromUrl'
 import { getNamesFromArray } from 'utils/getNamesFromArray'
 import { useRouter } from 'next/router'
+import { getUrlCloudnaryLowQuality } from 'utils/getUrlCloudnaryLowQuality'
 
 const Tweet = ({
   author,
@@ -20,6 +21,7 @@ const Tweet = ({
   id,
   likesBy,
   Comment,
+  image
 }: ITweet) => {
   const router = useRouter()
   const { data: session } = useSession()
@@ -102,7 +104,10 @@ const Tweet = ({
         dangerouslySetInnerHTML={{ __html: linkify(body) }}
       />
 
-      {getLinkFromText(body) && (
+      {image && (<Image src={getUrlCloudnaryLowQuality(image)} className="rounded-md" alt={'Tweet de igloolab'} width={1080}
+        height={1080} />)}
+
+      {getLinkFromText(body) && !image && (
         <LinkPreview
           url={getLinkFromText(body)?.toString() || ''}
           showLoader
@@ -123,9 +128,8 @@ const Tweet = ({
       <div className="mt-5 flex justify-between space-x-5  pt-3 text-gray-500 border-t border-gray-300">
         <div className="flex gap-5">
           <div
-            className={`flex space-x-2 cursor-pointer sm:hover:text-pink-700 ${
-              isLiked && 'text-pink-700'
-            }`}
+            className={`flex space-x-2 cursor-pointer sm:hover:text-pink-700 ${isLiked && 'text-pink-700'
+              }`}
             onClick={handleClickLike}
           >
             <svg

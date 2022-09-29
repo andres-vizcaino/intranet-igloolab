@@ -10,6 +10,7 @@ export default async function handler(
       id: true,
       body: true,
       createdAt: true,
+      image: true,
       author: {
         select: {
           id: true,

@@ -9,10 +9,11 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   if (req.method === 'POST') {
-    const { body, userId } = req.body
+    const { body, userId, image } = req.body
     const response = await prisma.tweet.create({
       data: {
         body,
+        image,
         author: {
           connect: {
             id: userId,

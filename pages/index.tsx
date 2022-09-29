@@ -10,10 +10,12 @@ import {
 import { allConfetti } from 'utils/fireworks-conffeti'
 import CreateTweet from 'components/CreateTweet'
 import { NextApplicationPage } from './_app'
+import { useState } from 'react'
 
 const Home: NextApplicationPage = () => {
   const { data, error } = useSWR<ITweet[]>('/api/tweet')
   const { data: users } = useSWR<IUser[]>('/api/users')
+  const [onlyCorazon, setOnlyCorazon] = useState(false)
 
   return (
     <div>
@@ -43,9 +45,17 @@ const Home: NextApplicationPage = () => {
           })}
         </div>
 
+        <button
+          type="button"
+          onClick={() => setOnlyCorazon(!onlyCorazon)}
+          className="max-w-lg bg-igloolab hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          {onlyCorazon ? 'Ver todos los estados' : 'Ver solo #diadelcorazon'}
+        </button>
+
         {error && <div>failed to load</div>}
         {!data && <div>Cargando todos los tweets...</div>}
-        {data?.map((tweet) => (
+        {data?.filter(tweet => onlyCorazon ? tweet.body.includes('#diadelcorazon') : true).map((tweet) => (
           <Tweet key={tweet.id} {...tweet} />
         ))}
       </div>

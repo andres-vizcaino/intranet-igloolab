@@ -59,7 +59,7 @@ const PetsPage: NextApplicationPage = () => {
               className={`scale-75 ${index % 2 === 0
                 ? 'translate-x-4 skew-y-3'
                 : 'translate-x-4 -skew-y-3'
-                }  transform-gpu hover:scale-110`}
+                }  transform-gpu hover:scale-110 ease-in-out transition-all`}
               objectFit="cover"
               unoptimized
               loading="lazy"

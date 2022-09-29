@@ -4,8 +4,8 @@ export const deleteTweet = async (id: number) => {
   await axios.delete(`/api/tweet/${id}`)
 }
 
-export const createTweet = async (body: string, userId: string) => {
-  await axios.post('/api/tweet/create', { body, userId })
+export const createTweet = async ({ body, userId, image = '' }: { body: string, userId: string, image: string }): Promise<void> => {
+  await axios.post('/api/tweet/create', { body, userId, image })
 }
 
 export const likeTweet = async (id: number, userId: string | undefined) => {
