@@ -81,7 +81,7 @@ const LaMejorMandala: NextApplicationPage = () => {
                             )}
                         </div>
 
-                        {session?.user.id === mandala.owner.id && (<div className="flex items-center justify-center gap-1">
+                        <div className="flex items-center justify-center gap-1">
                             <Image
                                 src={mandala.owner.image}
                                 alt={mandala.owner.name || ''}
@@ -94,7 +94,7 @@ const LaMejorMandala: NextApplicationPage = () => {
                                     {mandala.owner.name}
                                 </a>
                             </Link>
-                        </div>)}
+                        </div>
                     </div>
                 ))}
             </div>
