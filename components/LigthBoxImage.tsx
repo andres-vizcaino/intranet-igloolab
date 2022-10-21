@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { likePet, unlikePet } from 'services/pet.services'
+import { likeContent, unlikeContent } from 'services/content.services'
 
 type Props = {
   idPet: string
@@ -42,10 +43,10 @@ const LigthBoxImage = ({
     setIsLiked(!isLiked)
     if (!isLiked) {
       setLikes(likes + 1)
-      await likePet(idPet, session?.user?.id)
+      await likeContent(idPet, session?.user?.id)
     } else {
       setLikes(likes - 1)
-      await unlikePet(idPet, session?.user?.id)
+      await unlikeContent(idPet, session?.user?.id)
     }
   }
 
@@ -58,7 +59,6 @@ const LigthBoxImage = ({
       >
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
-            as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"

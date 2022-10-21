@@ -19,5 +19,6 @@
   },
   "[php]": {
     "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
-  } // Tell VSCode to use Prettier as default file formatter
+  },
+  "cSpell.words": ["halloween"] // Tell VSCode to use Prettier as default file formatter
 }

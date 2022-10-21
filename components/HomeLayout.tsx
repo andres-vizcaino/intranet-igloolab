@@ -147,7 +147,7 @@ const HomeLayout = ({ children }: Props) => {
               </Link>
             </li>
             <li>
-              <Link href="/amor-amistad">
+              <Link href="/halloween">
                 <a
                   className={
                     'flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100' +
@@ -156,19 +156,17 @@ const HomeLayout = ({ children }: Props) => {
                 >
                   <span>
                     <Image
-                      src="/icons/amor-relleno.png"
+                      src="/icons/halloween-icon.svg"
                       width={24}
                       height={24}
                       alt="icon menu"
                     />
                   </span>
-                  <span className={!isOpen ? 'lg:hidden' : ''}>
-                    Amor/amistad
-                  </span>
+                  <span className={!isOpen ? 'lg:hidden' : ''}>Halloween</span>
                 </a>
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/semana-salud/la-mejor-mandala">
                 <a
                   className={
@@ -187,7 +185,7 @@ const HomeLayout = ({ children }: Props) => {
                   <span className={!isOpen ? 'lg:hidden' : ''}>Mandalas</span>
                 </a>
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link href="/creative">
                 <a

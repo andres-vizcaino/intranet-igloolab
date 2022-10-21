@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { FormEvent, Fragment, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { postNewMandala } from 'services/mandala.services'
+import { postNewContent } from 'services/content.services'
 import { uploadFileReturnName } from 'services/uploadFile.services'
 import { mutate } from 'swr'
 
@@ -13,7 +13,7 @@ type Props = {
   closeModal: () => void
 }
 
-const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
+const CreateContentModal = ({ isOpen, closeModal }: Props) => {
   const { data: session } = useSession()
   const [name, setName] = useState('')
   const { image, preview, setImage } = useFileUpload()
@@ -39,11 +39,17 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
     setIsLoading(true)
     if (image) {
       const photo: string = await uploadFileReturnName(image)
-      await postNewMandala(name, photo, session?.user?.id || '')
+      await postNewContent(
+        name,
+        photo,
+        session?.user?.id || '',
+        '',
+        'halloween'
+      )
     }
     setIsLoading(false)
 
-    mutate('/api/mandala')
+    mutate('/api/content/halloween')
 
     closeModal()
     setName('')
@@ -62,7 +68,6 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
       >
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
-            as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
@@ -94,8 +99,7 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                 >
-                  Estamos cargando la fotico de tu mandala 👀📸, por favor
-                  espera...
+                  Estamos cargando la fotico 👀📸, por favor espera...
                 </Dialog.Title>
               </div>
             ) : (
@@ -107,7 +111,7 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
                   as="h3"
                   className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                 >
-                  Sube la foto de tu mandala 📸
+                  Sube la foto 📸
                 </Dialog.Title>
                 <div className="mt-2">
                   <input
@@ -177,4 +181,4 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
   )
 }
 
-export default CreateMandalaModal
+export default CreateContentModal

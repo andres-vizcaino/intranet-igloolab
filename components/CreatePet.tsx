@@ -51,7 +51,7 @@ const CreatePetModal = ({ isOpen, closeModal }: Props) => {
   }
 
   return (
-    <Transition appear show={isOpen} as={Fragment}>
+    <Transition show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto"
@@ -62,7 +62,6 @@ const CreatePetModal = ({ isOpen, closeModal }: Props) => {
       >
         <div className="min-h-screen px-4 text-center">
           <Transition.Child
-            as={Fragment}
             enter="ease-out duration-300"
             enterFrom="opacity-0"
             enterTo="opacity-100"
