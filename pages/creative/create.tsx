@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useState } from 'react'
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
@@ -34,7 +33,9 @@ const CreatePostCreative: NextApplicationPage = () => {
   )
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
-    accept: 'image/*',
+    accept: {
+      'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+    },
     maxSize: 2500000, // 2.5MB
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles?.[0]

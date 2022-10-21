@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { NextApplicationPage } from 'pages/_app'

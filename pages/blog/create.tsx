@@ -1,4 +1,3 @@
-import { NextPage } from 'next'
 import { useState } from 'react'
 import MarkdownIt from 'markdown-it'
 import MdEditor from 'react-markdown-editor-lite'
@@ -66,12 +65,14 @@ const CreateBlog: NextApplicationPage = () => {
           <Switch
             checked={published}
             onChange={setPublished}
-            className={`${published ? 'bg-blue-600' : 'bg-gray-200'
-              } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
+            className={`${
+              published ? 'bg-blue-600' : 'bg-gray-200'
+            } relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
           >
             <span
-              className={`${published ? 'translate-x-6' : 'translate-x-1'
-                } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
+              className={`${
+                published ? 'translate-x-6' : 'translate-x-1'
+              } inline-block w-4 h-4 transform bg-white rounded-full transition-transform`}
             />
           </Switch>
         </div>

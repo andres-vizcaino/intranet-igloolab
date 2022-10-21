@@ -1,5 +1,4 @@
 import { IPost } from 'models/Post.model'
-import { NextPage } from 'next'
 import Link from 'next/link'
 import { NextApplicationPage } from 'pages/_app'
 import useSWR from 'swr'

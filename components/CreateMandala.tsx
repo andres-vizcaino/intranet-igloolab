@@ -20,7 +20,9 @@ const CreateMandalaModal = ({ isOpen, closeModal }: Props) => {
   const [isLoading, setIsLoading] = useState(false)
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
-    accept: 'image/*',
+    accept: {
+      'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+    },
     maxSize: 2500000, // 2.5MB
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles?.[0]

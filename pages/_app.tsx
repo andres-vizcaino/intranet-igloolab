@@ -5,12 +5,11 @@ import Head from 'next/head'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from 'next-themes'
 import Router from 'next/router'
-import NProgress from 'nprogress' //nprogress module
-import 'nprogress/nprogress.css' //styles of nprogress
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import HomeLayout from 'components/HomeLayout'
 import AuthGuard from 'components/AuthGuard'
-import { NextPage } from "next"
-
+import { NextPage } from 'next'
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
@@ -45,7 +44,6 @@ function MyApp(props: AppProps) {
           ) : (
             <Component {...pageProps} />
           )}
-
         </ThemeProvider>
       </SWRConfig>
     </SessionProvider>

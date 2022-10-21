@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 
 type Props = {
-  children: React.ReactNode
+  children: JSX.Element
 }
 
 const HomeLayout = ({ children }: Props) => {
@@ -162,7 +162,9 @@ const HomeLayout = ({ children }: Props) => {
                       alt="icon menu"
                     />
                   </span>
-                  <span className={!isOpen ? 'lg:hidden' : ''}>Amor/amistad</span>
+                  <span className={!isOpen ? 'lg:hidden' : ''}>
+                    Amor/amistad
+                  </span>
                 </a>
               </Link>
             </li>
@@ -234,7 +236,6 @@ const HomeLayout = ({ children }: Props) => {
         </nav>
 
         <div className="flex-shrink-0 p-2 border-t max-h-14">
-
           <button
             onClick={handleSignOut}
             className={

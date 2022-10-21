@@ -24,7 +24,9 @@ const CreateTweet = () => {
   }, [status])
 
   const { getRootProps, getInputProps, fileRejections } = useDropzone({
-    accept: 'image/*',
+    accept: {
+      'image/*': ['.png', '.gif', '.jpeg', '.jpg'],
+    },
     maxSize: 2500000, // 2.5MB
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles?.[0]
@@ -52,7 +54,11 @@ const CreateTweet = () => {
     if (image) {
       photo = await uploadFileReturnName(image)
     }
-    await createTweet({ body: status, userId: session?.user.id || '', image: photo })
+    await createTweet({
+      body: status,
+      userId: session?.user.id || '',
+      image: photo,
+    })
 
     setIsLoading(false)
     mutate('/api/tweet')
@@ -107,15 +113,13 @@ const CreateTweet = () => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-
               {isLoading ? (
                 <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white dark:bg-slate-500 shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900 dark:text-white"
                   >
-                    Estamos cargando tu tweet 👀📸, por favor
-                    espera...
+                    Estamos cargando tu tweet 👀📸, por favor espera...
                   </Dialog.Title>
                 </div>
               ) : (
@@ -142,10 +146,11 @@ const CreateTweet = () => {
 
                     <div className="mt-2 text-right">
                       <span
-                        className={`${count >= 200
-                          ? 'text-red-500'
-                          : 'text-gray-600 dark:text-white'
-                          } text-sm `}
+                        className={`${
+                          count >= 200
+                            ? 'text-red-500'
+                            : 'text-gray-600 dark:text-white'
+                        } text-sm `}
                       >
                         {count}/280
                       </span>
@@ -187,8 +192,8 @@ const CreateTweet = () => {
 
                   {fileRejections.length > 0 && (
                     <div className="mt-2 text-center text-xs text-red-500">
-                      La imagen selecionada es muy pesada, intenta con una menor a
-                      2MB
+                      La imagen selecionada es muy pesada, intenta con una menor
+                      a 2MB
                     </div>
                   )}
 
@@ -207,7 +212,8 @@ const CreateTweet = () => {
                       {' 🚀 '}
                     </span>
                   </div>
-                </form>)}
+                </form>
+              )}
             </Transition.Child>
           </div>
         </Dialog>

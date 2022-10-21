@@ -60,6 +60,8 @@ model User {
   postCreative  PostCreative[]
   Mandala       Mandala?
   MandalaLikes  Mandala[]      @relation("likesMandala")
+  Content       Content[]
+  ContentLikes  Content[]      @relation("likesContent")
 }
 
 model VerificationToken {
@@ -173,6 +175,19 @@ model Mandala {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("update_at")
   likesBy   User[]   @relation("likesMandala")
+}
+
+model Content {
+  id          String   @id @default(cuid())
+  name        String
+  ownerId     String
+  photo       String
+  description String
+  typeContent String
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("update_at")
+  likesBy     User[]   @relation("likesContent")
 }
 
 model Congrat {
