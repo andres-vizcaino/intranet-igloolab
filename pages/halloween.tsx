@@ -40,57 +40,63 @@ const HalloweenPage: NextApplicationPage = () => {
       </button>
 
       <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5">
-        {posts.map((post, index) => (
-          <div
-            key={post.id}
-            className={`${index === 0 && 'sm:row-span-2	sm:col-span-2'}`}
-          >
-            <Image
-              src={getUrlCloudnaryLowQuality(post.photo)}
-              alt={post.name}
-              width="100%"
-              onClick={() => {
-                setPetSelected(post)
-                closeLigthBox()
-              }}
-              height="100%"
-              layout="responsive"
-              className={`scale-75 ${
-                index % 2 === 0
-                  ? 'translate-x-4 skew-y-3'
-                  : 'translate-x-4 -skew-y-3'
-              }  transform-gpu hover:scale-110 ease-in-out transition-all`}
-              objectFit="cover"
-              unoptimized
-              loading="lazy"
-            />
-            <div className="flex gap-1 justify-center items-baseline">
-              <p
-                className={`${index === 0 ? 'text-3xl' : 'text-xl'} font-bold`}
-              >
-                {post.name}
-              </p>
-              {session?.user.id === post.owner.id && (
-                <button onClick={() => deleteContentSelect(post.id)}>❌</button>
-              )}
-            </div>
-
-            <div className="flex items-center justify-center gap-1">
+        {posts
+          .sort((postA, postB) => postB.likesBy.length - postA.likesBy.length)
+          .map((post, index) => (
+            <div
+              key={post.id}
+              className={`${index === 0 && 'sm:row-span-2	sm:col-span-2'}`}
+            >
               <Image
-                src={post.owner.image}
-                alt={post.owner.name || ''}
-                width={20}
-                height={20}
-                className="rounded-full"
+                src={getUrlCloudnaryLowQuality(post.photo)}
+                alt={post.name}
+                width="100%"
+                onClick={() => {
+                  setPetSelected(post)
+                  closeLigthBox()
+                }}
+                height="100%"
+                layout="responsive"
+                className={`scale-75 ${
+                  index % 2 === 0
+                    ? 'translate-x-4 skew-y-3'
+                    : 'translate-x-4 -skew-y-3'
+                }  transform-gpu hover:scale-110 ease-in-out transition-all`}
+                objectFit="cover"
+                unoptimized
+                loading="lazy"
               />
-              <Link href={`/profile/${post.owner.id}`}>
-                <a className={`${index === 0 ? 'text-base' : 'text-sm'}`}>
-                  {post.owner.name}
-                </a>
-              </Link>
+              <div className="flex gap-1 justify-center items-baseline">
+                <p
+                  className={`${
+                    index === 0 ? 'text-3xl' : 'text-xl'
+                  } font-bold`}
+                >
+                  {post.name}
+                </p>
+                {session?.user.id === post.owner.id && (
+                  <button onClick={() => deleteContentSelect(post.id)}>
+                    ❌
+                  </button>
+                )}
+              </div>
+
+              <div className="flex items-center justify-center gap-1">
+                <Image
+                  src={post.owner.image}
+                  alt={post.owner.name || ''}
+                  width={20}
+                  height={20}
+                  className="rounded-full"
+                />
+                <Link href={`/profile/${post.owner.id}`}>
+                  <a className={`${index === 0 ? 'text-base' : 'text-sm'}`}>
+                    {post.owner.name}
+                  </a>
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       <LigthBoxImage

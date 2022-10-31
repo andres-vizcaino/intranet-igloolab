@@ -8,7 +8,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const mandalas = await prisma.content.findMany({
+  const contents = await prisma.content.findMany({
     include: {
       owner: true,
       likesBy: true,
@@ -25,5 +25,5 @@ export default async function handler(
     ],
   })
 
-  res.status(200).json(mandalas)
+  res.status(200).json(contents)
 }
