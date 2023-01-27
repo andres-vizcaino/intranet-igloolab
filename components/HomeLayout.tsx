@@ -166,26 +166,25 @@ const HomeLayout = ({ children }: Props) => {
                 </a>
               </Link>
             </li>
-            {/* <li>
-              <Link href="/semana-salud/la-mejor-mandala">
-                <a
-                  className={
-                    'flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100' +
-                    (!isOpen ? ' justify-center' : '')
-                  }
-                >
-                  <span>
-                    <Image
-                      src="/icons/mandala.png"
-                      width={24}
-                      height={24}
-                      alt="icon menu"
-                    />
-                  </span>
-                  <span className={!isOpen ? 'lg:hidden' : ''}>Mandalas</span>
-                </a>
-              </Link>
-            </li> */}
+            <li>
+              <a
+                href="https://talks.igloolab.co/"
+                className={
+                  'flex items-center p-2 space-x-2 rounded-md hover:bg-gray-100' +
+                  (!isOpen ? ' justify-center' : '')
+                }
+              >
+                <span>
+                  <Image
+                    src="/icons/microphone.png"
+                    width={24}
+                    height={24}
+                    alt="icon menu"
+                  />
+                </span>
+                <span className={!isOpen ? 'lg:hidden' : ''}>Talks</span>
+              </a>
+            </li>
             <li>
               <Link href="/creative">
                 <a

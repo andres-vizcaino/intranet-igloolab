@@ -23,7 +23,7 @@ const getDayandMonth = (date: string) => {
 export const getDateToStringWithCurrentYear = (date: string) => {
   const { day, month } = getDayandMonth(date)
   const CURRENT_YEAR = new Date().getFullYear()
-  return new Date(`${CURRENT_YEAR}-${month + 1}-${day + 2}`).toDateString()
+  return new Date(`${CURRENT_YEAR}-${month + 1}-${day + 1}`).toDateString()
 }
 
 export const getDayandMonthName = (date: string) => {
