@@ -288,14 +288,23 @@ const HomeLayout = ({ children }: Props) => {
                 </svg>
               </button>
 
-              <a
-                href="https://trello.com/b/Hdmig9rd/intranet"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center px-4 py-1 space-x-1 bg-red-600 text-white rounded-md shadow hover:bg-opacity-80"
-              >
-                <span>¿Tienes ideas para la intranet?</span>
-              </a>
+              <Link href="/cocola">
+                <span
+                  className="inline-flex
+                  items-center
+                  justify-center
+                  px-4
+                  py-1
+                  space-x-1
+                  bg-green-600
+                  text-white
+                  rounded-md
+                  shadow
+                  hover:bg-opacity-80 cursor-pointer"
+                >
+                  COCOLA 🛟
+                </span>
+              </Link>
             </div>
 
             <div className="relative flex items-center space-x-3">
