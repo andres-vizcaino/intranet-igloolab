@@ -3,7 +3,7 @@ import { NextApplicationPage } from './_app'
 
 const DOWNLOADS = [
   {
-    title: '¿Sabes que es el acoso laboral?',
+    title: '¿Sabes qué es el acoso laboral?',
     url: '/pdf/que-es-acoso-laboral.pdf',
     image: '/img/que-es-acoso-laboral.png',
   },
