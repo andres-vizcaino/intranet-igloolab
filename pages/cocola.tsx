@@ -8,7 +8,7 @@ const DOWNLOADS = [
     image: '/img/que-es-acoso-laboral.png',
   },
   {
-    title: 'Formato de quejas de acoso laboral',
+    title: 'Formato de quejas para posible acoso laboral',
     url: '/docx/formato-quejas-posible-acoso-laboral.docx',
     image: '/img/que-es-acoso-laboral.png',
   },
