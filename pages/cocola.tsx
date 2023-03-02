@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { NextApplicationPage } from './_app'
 
 const CocolaPage: NextApplicationPage = () => (
@@ -34,6 +35,39 @@ const CocolaPage: NextApplicationPage = () => (
             allowFullScreen
           ></iframe>
         </div>
+
+        <section>
+          <h4 className="text-xl my-10 underline">Descargables</h4>
+
+          <div className="shadow-lg rounded-2xl bg-white p-4">
+            <div className="flex-row gap-4 flex justify-center items-center">
+              <div className="flex-shrink-0">
+                <a href="#" className="relative block">
+                  <Image
+                    alt="profil"
+                    src="/img/que-es-acoso-laboral.png"
+                    className="mx-auto object-cover rounded-full h-16 w-16"
+                    objectFit="cover"
+                    width={64}
+                    height={64}
+                  />
+                </a>
+              </div>
+              <div className="flex flex-col w-full">
+                <span className="text-lg font-medium text-gray-600">
+                  ¿Sabes que es el acoso laboral?
+                </span>
+              </div>
+              <a
+                download
+                href="/pdf/que-es-acoso-laboral.pdf"
+                className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white  transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
+              >
+                Descargar PDF
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   </div>
