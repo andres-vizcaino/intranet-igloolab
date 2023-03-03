@@ -8,6 +8,7 @@ import Image from 'next/image'
 import useFileUpload from 'hooks/utils/useFileUpload'
 import { useDropzone } from 'react-dropzone'
 import { uploadFileReturnName } from 'services/uploadFile.services'
+import { createNotification } from 'services/createNotification'
 
 const CreateTweet = () => {
   const router = useRouter()
@@ -58,6 +59,15 @@ const CreateTweet = () => {
       body: status,
       userId: session?.user.id || '',
       image: photo,
+    }).then(async () => {
+      const notificationMessage = `${session?.user.name} ha creado un estado en la intranet, ve a verlo! 🙈🙉
+      
+      https://open.igloolab.co/}
+      `
+
+      await createNotification({
+        text: notificationMessage,
+      })
     })
 
     setIsLoading(false)

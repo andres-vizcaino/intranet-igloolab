@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react'
 import { slugify } from 'utils/slugify'
 import { useRouter } from 'next/router'
 import { NextApplicationPage } from 'pages/_app'
+import { createNotification } from 'services/createNotification'
 
 type TEditorParams = {
   text: string
@@ -33,6 +34,17 @@ const CreateBlog: NextApplicationPage = () => {
       published,
       authorId: session?.user.id || '',
       slug: slugify(title),
+    }).then(async () => {
+      const notificationMessage = `${
+        session?.user.name
+      } ha creado un nuevo articulo en el Blog, corre a verlo! 🍻
+      
+      https://open.igloolab.co/blog/${slugify(title)}
+      `
+
+      await createNotification({
+        text: notificationMessage,
+      })
     })
     router.push('/blog')
   }

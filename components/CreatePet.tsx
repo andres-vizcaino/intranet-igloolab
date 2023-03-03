@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { FormEvent, Fragment, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { createNotification } from 'services/createNotification'
 import { postNewPet } from 'services/pet.services'
 import { uploadFileReturnName } from 'services/uploadFile.services'
 import { mutate } from 'swr'
@@ -39,7 +40,16 @@ const CreatePetModal = ({ isOpen, closeModal }: Props) => {
     setIsLoading(true)
     if (image) {
       const photo: string = await uploadFileReturnName(image)
-      await postNewPet(name, photo, session?.user?.id || '')
+      await postNewPet(name, photo, session?.user?.id || '').then(async () => {
+        const notificationMessage = `${session?.user.name} ha agregado a su mascota ${name}, ve a concerl@! 🙈🙉
+        
+        https://open.igloolab.co/pets
+        `
+
+        await createNotification({
+          text: notificationMessage,
+        })
+      })
     }
     setIsLoading(false)
 

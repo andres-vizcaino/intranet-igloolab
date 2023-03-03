@@ -3,6 +3,7 @@ import { IUser } from 'models/User.model'
 import { useSession } from 'next-auth/react'
 import { useState, useEffect, ChangeEvent, FormEvent, Fragment } from 'react'
 import { createCongrat } from 'services/congrat.services'
+import { createNotification } from 'services/createNotification'
 import useSWR, { mutate } from 'swr'
 
 type Props = {
@@ -53,7 +54,16 @@ const CreateCongrats = ({ isOpen, closeModal }: Props) => {
       session?.user.id || '',
       selectUser?.id || '',
       isAnonymous
-    )
+    ).then(async () => {
+      const notificationMessage = `Hay una tarjeta nueva en el muro de mensaje bonitos para ${selectUser?.name} ve a verla! 🌟
+      
+      https://open.igloolab.co/congrats
+      `
+
+      await createNotification({
+        text: notificationMessage,
+      })
+    })
     setSelectOption('')
     setStatus('')
     setisAnonymous(false)

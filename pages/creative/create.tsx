@@ -12,6 +12,7 @@ import { uploadFileReturnName } from 'services/uploadFile.services'
 import { createCreative } from 'services/creative.services'
 import ModalLoanding from 'components/modalLoanding'
 import { NextApplicationPage } from 'pages/_app'
+import { createNotification } from 'services/createNotification'
 
 type TEditorParams = {
   text: string
@@ -59,7 +60,16 @@ const CreatePostCreative: NextApplicationPage = () => {
         categoryId,
         session?.user?.id || '',
         photo
-      )
+      ).then(async (res) => {
+        const notificationMessage = `${session?.user.name} ha compartido un post creativo, corre a verlo! 🎨
+        
+        https://open.igloolab.co/creative/${res.data.id}
+        `
+
+        await createNotification({
+          text: notificationMessage,
+        })
+      })
       setIsLoading(false)
 
       router.push('/creative')
