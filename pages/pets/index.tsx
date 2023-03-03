@@ -7,8 +7,8 @@ import { getUrlCloudnaryLowQuality } from 'utils/getUrlCloudnaryLowQuality'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
 import { deletePet } from 'services/pet.services'
-import LigthBoxImage from 'components/LigthBoxImage'
 import { NextApplicationPage } from 'pages/_app'
+import LigthBoxImagePet from 'components/LigthBoxImagePet'
 
 const PetsPage: NextApplicationPage = () => {
   const { data: session } = useSession()
@@ -56,10 +56,11 @@ const PetsPage: NextApplicationPage = () => {
               }}
               height="100%"
               layout="responsive"
-              className={`scale-75 ${index % 2 === 0
-                ? 'translate-x-4 skew-y-3'
-                : 'translate-x-4 -skew-y-3'
-                }  transform-gpu hover:scale-110 ease-in-out transition-all`}
+              className={`scale-75 ${
+                index % 2 === 0
+                  ? 'translate-x-4 skew-y-3'
+                  : 'translate-x-4 -skew-y-3'
+              }  transform-gpu hover:scale-110 ease-in-out transition-all`}
               objectFit="cover"
               unoptimized
               loading="lazy"
@@ -93,7 +94,7 @@ const PetsPage: NextApplicationPage = () => {
         ))}
       </div>
 
-      <LigthBoxImage
+      <LigthBoxImagePet
         isOpen={isOpenLigthBox}
         closeModal={closeLigthBox}
         image={petSelected?.photo || ''}
