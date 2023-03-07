@@ -8,9 +8,14 @@ const DOWNLOADS = [
     image: '/img/que-es-acoso-laboral.png',
   },
   {
+    title: '¿Cómo se interpone una queja por acoso laboral?',
+    url: '/pdf/mail-interposicion-queja.pdf',
+    image: '/img/interposision-queja.png',
+  },
+  {
     title: 'Formato de quejas para posible acoso laboral',
     url: '/docx/formato-quejas-posible-acoso-laboral.docx',
-    image: '/img/que-es-acoso-laboral.png',
+    image: '/img/interposision-queja.png',
   },
 ]
 
