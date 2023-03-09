@@ -13,6 +13,11 @@ const DOWNLOADS = [
     image: '/img/interposision-queja.png',
   },
   {
+    title: '¿Qué sucede al presentar una queja por acoso laoral?',
+    url: '/pdf/mail-proceso-de-la-queja.pdf',
+    image: '/img/interposision-queja.png',
+  },
+  {
     title: 'Formato de quejas para posible acoso laboral',
     url: '/docx/formato-quejas-posible-acoso-laboral.docx',
     image: '/img/interposision-queja.png',
