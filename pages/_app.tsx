@@ -1,15 +1,15 @@
 import type { AppProps } from 'next/app'
 import '../styles/index.css'
 import { SessionProvider } from 'next-auth/react'
-import Head from 'next/head'
 import { SWRConfig } from 'swr'
 import { ThemeProvider } from 'next-themes'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import HomeLayout from 'components/HomeLayout'
 import AuthGuard from 'components/AuthGuard'
 import { NextPage } from 'next'
+import Head from 'next/head'
+import Layout from 'components/Layout'
 
 //Binding events.
 Router.events.on('routeChangeStart', () => NProgress.start())
@@ -32,14 +32,14 @@ function MyApp(props: AppProps) {
     <SessionProvider session={session}>
       <SWRConfig value={{ fetcher }}>
         <Head>
-          <title>Intranet - igloolab</title>
+          <title>igloolab - intranet</title>
         </Head>
         <ThemeProvider attribute="class">
           {Component.requireAuth ? (
             <AuthGuard>
-              <HomeLayout>
+              <Layout>
                 <Component {...pageProps} />
-              </HomeLayout>
+              </Layout>
             </AuthGuard>
           ) : (
             <Component {...pageProps} />
