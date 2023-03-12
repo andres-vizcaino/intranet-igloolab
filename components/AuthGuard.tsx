@@ -8,7 +8,6 @@ const AuthGuard = ({ children }: { children: JSX.Element }) => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(status)
     if (status === 'unauthenticated') {
       router.push('/login')
     }

@@ -44,7 +44,7 @@ const Home: NextApplicationPage = () => {
 
         {error && <div>failed to load</div>}
         {!data && <div>Cargando todos los tweets...</div>}
-        {data?.map((tweet) => (
+        {data?.slice(0, 15).map((tweet) => (
           <Tweet key={tweet.id} {...tweet} />
         ))}
       </div>
