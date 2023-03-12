@@ -1,11 +1,11 @@
 import { signOut, useSession } from 'next-auth/react'
 import { useTheme } from 'next-themes'
-import { PropsWithChildren, useEffect } from 'react'
+import { PropsWithChildren, useEffect, useState } from 'react'
 import MenuAside from './MenuAside'
 
 const Layout = ({ children }: PropsWithChildren) => {
   const { data: session } = useSession()
-
+  const [isOpenMenuMobile, setIsOpenMenuMobile] = useState(false)
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
@@ -15,6 +15,10 @@ const Layout = ({ children }: PropsWithChildren) => {
       setTheme('light')
     }
   }, [theme, setTheme])
+
+  const handleToggleMenuMobile = () => {
+    setIsOpenMenuMobile(!isOpenMenuMobile)
+  }
 
   return (
     <>
@@ -99,7 +103,10 @@ const Layout = ({ children }: PropsWithChildren) => {
             >
               Intranet
             </h5>
-            <button className="w-12 h-16 -mr-2 border-r lg:hidden">
+            <button
+              onClick={handleToggleMenuMobile}
+              className="w-12 h-16 -mr-2 border-r lg:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 my-auto"
@@ -123,10 +130,62 @@ const Layout = ({ children }: PropsWithChildren) => {
               >
                 {theme === 'dark' ? '🌞' : '🌚'}
               </button>
+
+              <button
+                aria-label="notification"
+                className="w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200 lg:hidden p-1"
+              >
+                <picture>
+                  <img
+                    src={session?.user.image || '/img/cr7.png'}
+                    alt={`Foto de perfil de ${session?.user.name}`}
+                    className="object-cover w-full h-full rounded-xl"
+                  />
+                </picture>
+              </button>
             </div>
           </div>
         </div>
 
+        {/* Menu mobile */}
+        <div
+          className={`fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 transition-all duration-300 ${
+            isOpenMenuMobile ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          }`}
+        ></div>
+        <div
+          className={`fixed z-30 top-0 left-0 w-64 h-full bg-white dark:bg-slate-800 transition-all duration-300 transform ${
+            isOpenMenuMobile ? 'translate-x-0' : '-translate-x-full'
+          }`}
+        >
+          <div className="px-6 py-4 flex items-center justify-between border-b">
+            <h5 className="text-2xl text-gray-600 dark:text-gray-300 font-medium">
+              Intranet
+            </h5>
+            <button
+              onClick={handleToggleMenuMobile}
+              className="w-12 h-12 -mr-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 my-auto"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="flex space-x-4">
+            <MenuAside />
+          </div>
+        </div>
         <div className="px-6 pt-6 2xl:container">{children}</div>
       </div>
     </>
