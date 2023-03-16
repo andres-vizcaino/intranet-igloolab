@@ -44,6 +44,11 @@ const MENUS = [
   },
 
   {
+    name: 'Asistente inteligente',
+    icon: 'fa fa-star',
+    url: '/ai',
+  },
+  {
     name: 'Muro de estrellas',
     icon: 'fa fa-star',
     url: '/congrats',

@@ -236,3 +236,12 @@ model AmorAmistad {
   loveId   String
   message  String @default("")
 }
+
+model ResponseAI {
+  id        Int      @id @default(autoincrement())
+  prompt    String
+  response  String
+  helpful   Boolean
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("update_at")
+}
