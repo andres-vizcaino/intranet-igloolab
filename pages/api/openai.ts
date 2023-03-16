@@ -33,7 +33,7 @@ export default async function handler(
     },
     body: JSON.stringify({
       model: 'text-davinci-003',
-      prompt: `${prompt} \n\n`,
+      prompt: `${prompt}, todo en una linea sin generar espacios \n\n`,
       temperature: 0,
       max_tokens: 150,
       top_p: 1,
