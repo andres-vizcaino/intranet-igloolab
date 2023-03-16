@@ -71,7 +71,7 @@ const AIPage: NextApplicationPage = () => {
         pero puedes ayudarnos a mejorarlo. Utiliza el campo de texto para dejar
         un requerimiento o pregunta y la igloo-ai te generará una respuesta...
         Todas tus preguntas y respuestas serán guardadas de forma anónima para
-        que podamos mejorar el asistente. De este moto nuestro igloo-ai podrá
+        que podamos mejorar el asistente. De este modo nuestro igloo-ai podrá
         aprender directamente de nosotros colaboradores de igloolab y de esta
         forma conseguir que conozca mejor nuestras necesidades y nos ayude a
         resolverlas.
