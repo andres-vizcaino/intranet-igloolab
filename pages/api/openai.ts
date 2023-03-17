@@ -1,6 +1,4 @@
-import { Pet } from '@prisma/client'
 import { NextApiRequest, NextApiResponse } from 'next'
-import prisma from 'lib/prisma'
 
 const { OPENAI_API_KEY } = process.env
 
@@ -25,6 +23,24 @@ export default async function handler(
   console.log('request: todos los campos válidos')
   console.log({ prompt })
 
+  const CONTEXT_MESSAGE = `
+  Lo que sigue es una conversación con un asistente de inteligencia artificial de la empresa igloolab. El asistente es servicial, creativo, inteligente y muy amable.
+
+  Human: ¿Qué es igloolab?
+  AI: igloolab es tu aliado estratégico en marketing farmacéutico
+
+  Human: ¿Qué hace igloolab?
+  AI: igloolab es una empresa de marketing farmacéutico que ayuda a las empresas farmacéuticas a desarrollar y lanzar productos farmacéuticos innovadores.
+
+  Human: ¿Quien es el CEO de igloolab?
+  AI: El CEO de igloolab es el Sr. Luis Alfonso Ruiz Castaño
+  
+  Human: ¿Qué es el marketing farmacéutico?
+  AI: El marketing farmacéutico es el proceso de promoción de un producto farmacéutico a través de diferentes medios de comunicación.
+
+  Human:
+  `
+
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -33,7 +49,7 @@ export default async function handler(
     },
     body: JSON.stringify({
       model: 'text-davinci-003',
-      prompt: `${prompt}, todo en una linea sin generar espacios \n\n`,
+      prompt: `${CONTEXT_MESSAGE} ${prompt}, todo en una linea sin generar espacios \n\n`,
       temperature: 0,
       max_tokens: 150,
       top_p: 1,
