@@ -6,47 +6,35 @@ const MENUS = [
     icon: 'fa fa-map-marker',
     url: '/',
   },
-
   {
     name: 'Cocola',
     icon: 'fa fa-users',
     url: '/cocola',
   },
-
   {
     name: 'Directorio',
     icon: 'fa fa-address-book',
     url: '/profile',
   },
-
   {
     name: 'Mascotas',
     icon: 'fa fa-paw',
     url: '/pets',
   },
-
   {
     name: 'Blog',
     icon: 'fa fa-newspaper',
     url: '/blog',
   },
-
   {
     name: 'Muro creativo',
     icon: 'fa fa-paint-brush',
     url: '/creative',
   },
-
   {
     name: 'Talks',
     icon: 'fa fa-coffee',
     url: 'https://talks.igloolab.co/',
-  },
-
-  {
-    name: 'Asistente inteligente',
-    icon: 'fa fa-star',
-    url: '/ai',
   },
   {
     name: 'Muro de estrellas',
