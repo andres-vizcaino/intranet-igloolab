@@ -39,6 +39,7 @@ export interface ColumnTodo {
   }
 }
 
+// Eliminar esto
 export const columnsFromBackend: ColumnTodo = {
   ['1']: {
     title: 'To-do',
