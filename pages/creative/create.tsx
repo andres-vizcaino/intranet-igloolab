@@ -8,7 +8,10 @@ import useFileUpload from 'hooks/utils/useFileUpload'
 import Image from 'next/image'
 import { useDropzone } from 'react-dropzone'
 import SearchCategory from 'components/SearchCategory'
-import { uploadFileReturnName } from 'services/uploadFile.services'
+import {
+  uploadFileReturnName,
+  uploadFileReturnUrl,
+} from 'services/uploadFile.services'
 import { createCreative } from 'services/creative.services'
 import ModalLoanding from 'components/modalLoanding'
 import { NextApplicationPage } from 'pages/_app'
@@ -139,6 +142,7 @@ const CreatePostCreative: NextApplicationPage = () => {
         renderHTML={(text) => mdParser.render(text)}
         onChange={handleEditorChange}
         value={content}
+        onImageUpload={uploadFileReturnUrl}
       />
 
       <div className="my-5">
