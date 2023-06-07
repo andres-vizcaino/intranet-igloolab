@@ -9,6 +9,7 @@ import { slugify } from 'utils/slugify'
 import { useRouter } from 'next/router'
 import { NextApplicationPage } from 'pages/_app'
 import { createNotification } from 'services/createNotification'
+import { uploadFileReturnUrl } from 'services/uploadFile.services'
 
 type TEditorParams = {
   text: string
@@ -69,6 +70,7 @@ const CreateBlog: NextApplicationPage = () => {
         renderHTML={(text) => mdParser.render(text)}
         onChange={handleEditorChange}
         value={content}
+        onImageUpload={uploadFileReturnUrl}
       />
 
       <Switch.Group>
