@@ -22,7 +22,7 @@ type TEditorParams = {
 }
 
 const CreatePostCreative: NextApplicationPage = () => {
-  const mdParser = new MarkdownIt(/* Markdown-it options */)
+  const mdParser = new MarkdownIt()
   const [title, setTitle] = useState('')
   const { data: session } = useSession()
   const [categoryId, setCategoryId] = useState('')
