@@ -9,7 +9,7 @@ const AuthGuard = ({ children }: { children: JSX.Element }) => {
 
   useEffect(() => {
     if (status === 'unauthenticated') {
-      router.push('/login')
+      router.push('/maintenance')
     }
   }, [status, router])
 
